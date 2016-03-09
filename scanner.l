@@ -69,16 +69,15 @@ atribuicao				"="
 comentario				"/*"((\*+[^/*])|([^*]))*\**"*/"
 virgula					","
 pontoevirgula			";"
-ws						[ \t]
-quebralinha				\n
-other                   		.
+delim					[ \t\n]
+ws                      {delim}+
+other                  	.
 
 %%
 %{
 /*----------------------------- Rules -----------------------------*/
 %}
-{ws}				{ return WS;}
-{quebralinha}		{ return QUEBRALINHA; }
+{ws}				{ /*sem acao, sem retorno */ }
 {comentario}		{ 
 						int i;
 						for(i=0;i<yyleng;i++){

@@ -88,8 +88,9 @@ program:
 		| OTHER {fprintf(yyout,"Invalido. Input -> \"%s\"",yytext); }
 		;
 
-for:
-		FOR ABREPARENTESE id ATRIBUICAO numint PONTOEVIRGULA id PONTOEVIRGULA numint FECHAPARENTESE ABRECHAVE {
+expr:   id | numint
+
+for:	FOR ABREPARENTESE id ATRIBUICAO expr PONTOEVIRGULA id PONTOEVIRGULA expr FECHAPARENTESE ABRECHAVE {
 			int temp = atoi($9);
 			if(temp >= 0 ) 
 				fprintf(yyout,"for(%s = %s; %s <= %s; %s++){",$3,$5,$3,$7,$3);	
@@ -97,117 +98,21 @@ for:
 				fprintf(yyout,"for(%s = %s; %s >= %s; %s--){",$3,$5,$3,$7,$3);
 			}
 		
-		| FOR ABREPARENTESE id ATRIBUICAO numint PONTOEVIRGULA numint PONTOEVIRGULA numint FECHAPARENTESE ABRECHAVE {
-			int temp = atoi($9);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s; %s++){",$3,$5,$3,$7,$3);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s; %s--){",$3,$5,$3,$7,$3);
-			}
-		
-		| FOR WS ABREPARENTESE id ATRIBUICAO numint WS PONTOEVIRGULA WS id WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE {
-			int temp = atoi($14);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s; %s++){",$4,$6,$4,$10,$4);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s; %s--){",$4,$6,$4,$10,$4);
-			}
-				
-		| FOR WS ABREPARENTESE id ATRIBUICAO numint WS PONTOEVIRGULA WS id numint WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE {
-			int temp = atoi($15);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s%s; %s++){",$4,$6,$4,$10,$11,$4);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s%s; %s--){",$4,$6,$4,$10,$11,$4);
-			}
-		
-		| FOR WS ABREPARENTESE id ATRIBUICAO numint WS PONTOEVIRGULA WS numint WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE {
-			int temp = atoi($14);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s; %s++){",$4,$6,$4,$10,$4);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s; %s--){",$4,$6,$4,$10,$4);
-			}
-		
-		| FOR WS ABREPARENTESE WS id ATRIBUICAO numint WS PONTOEVIRGULA WS id WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE {
-			int temp = atoi($15);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s; %s++){",$5,$7,$5,$11,$5);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s; %s--){",$5,$7,$5,$11,$5);
-			}
-				
-		| FOR WS ABREPARENTESE WS id ATRIBUICAO numint WS PONTOEVIRGULA WS numint WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE {
-			int temp = atoi($15);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s; %s++){",$5,$7,$5,$11,$5);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s; %s--){",$5,$7,$5,$11,$5);
-			}
-		
-		| FOR ABREPARENTESE id ATRIBUICAO id numint PONTOEVIRGULA numint PONTOEVIRGULA numint FECHAPARENTESE ABRECHAVE {
-			int temp = atoi($10);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s%s; %s <= %s; %s++){",$3,$5,$6,$3,$8,$3);	
-			else 
-				fprintf(yyout,"for(%s = %s%s; %s >= %s; %s--){",$3,$5,$6,$3,$8,$3);
-			}
-		
-		| FOR WS ABREPARENTESE id ATRIBUICAO id numint WS PONTOEVIRGULA WS numint WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE {
-			int temp = atoi($15);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s%s; %s <= %s; %s++){",$4,$6,$7,$4,$11,$4);	
-			else 
-				fprintf(yyout,"for(%s = %s%s; %s >= %s; %s--){",$4,$6,$7,$4,$11,$4);
-			}
-		
-		| FOR WS ABREPARENTESE id ATRIBUICAO id soma id numint WS PONTOEVIRGULA WS id WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE { 
-			int temp = atoi($17);
-			if(temp >= 0 ) 
-				fprintf(yyout, "for(%s = %s - %s%s; %s <= %s; %s++){",$4,$6,$8,$9,$4,$6,$4);	
-			else 
-				fprintf(yyout, "for(%s = %s - %s%s; %s >= %s; %s--){",$4,$6,$8,$9,$4,$6,$4);
-			}
-			
-		| FOR WS ABREPARENTESE id ATRIBUICAO id soma id soma numint WS PONTOEVIRGULA WS id WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE { 																											
-			int temp = atoi($18);
-			if(temp >= 0 ) 
-				fprintf(yyout, "for(%s = %s - %s%s%s; %s <= %s; %s++){",$4,$6,$8,$9,$10,$4,$6,$4);	
-			else 
-				fprintf(yyout, "for(%s = %s - %s%s%s; %s >= %s; %s--){",$4,$6,$8,$9,$10,$4,$6,$4);
-			}
-			
-		| FOR WS ABREPARENTESE id ATRIBUICAO numint WS PONTOEVIRGULA WS id WS SOMA WS numint WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE { 
-			int temp = atoi($18);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s=%s; %s <= %s - %s; %s++){",$4,$6,$4,$10,$14,$4);	
-			else 
-				fprintf(yyout,"for(%s=%s; %s >= %s - %s; %s--){",$4,$6,$4,$10,$14,$4);
-			}
-			
-		| FOR WS ABREPARENTESE id ATRIBUICAO id numint WS PONTOEVIRGULA WS id numint WS PONTOEVIRGULA WS numint FECHAPARENTESE WS ABRECHAVE { 
-			int temp = atoi($16);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s%s; %s <= %s%s; %s++){",$4,$6,$7,$4,$11,$12,$4);	
-			else 
-				fprintf(yyout,"for(%s = %s%s; %s >= %s%s; %s--){",$4,$6,$7,$4,$11,$12,$4);
-			}
-			
-		| FOR WS ABREPARENTESE id ATRIBUICAO numint WS PONTOEVIRGULA WS numint WS PONTOEVIRGULA WS numint FECHAPARENTESE {
-			int temp = atoi($14);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s=%s; %s <= %s; %s++)",$4,$6,$4,$10,$4);	
-			else 
-				fprintf(yyout,"for(%s=%s; %s >= %s; %s--)",$4,$6,$4,$10,$4);
-			}
-		;
-		
+        ;
+
 numint:
 		NUMINT {$$ = strdup(yytext);
 		}
 		;
-scanf:
 
+tipo_entrada:   F
+                | C
+                | I
+                ;
+
+scanf: SCANF ABREPARENTESE ASPAS tipo_entrada ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA
+        {fprintf(yyout,"scanf(\"", $4 ,"\",&", $7 ,");"); }
+/*
 		SCANF ABREPARENTESE ASPAS C ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%c\",&%s);",$7);}
 		| SCANF ABREPARENTESE ASPAS F ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%f\",&%s);",$7);}
 		| SCANF ABREPARENTESE ASPAS I ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%d\",&%s);",$7);}
@@ -223,7 +128,8 @@ scanf:
 		| SCANF WS ABREPARENTESE ASPAS WS C ASPAS VIRGULA WS id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%c\",&%s);",$10);}
 		| SCANF WS ABREPARENTESE ASPAS WS C ASPAS VIRGULA WS id ABRECOLCHETE id VIRGULA id FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\" %%c\",&%s[%s,%s]);",$10,$12,$14);}
 		| SCANF WS ABREPARENTESE ASPAS F WS F ASPAS VIRGULA WS id VIRGULA WS id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%f %%f\", &%s, &%s);",$11,$14);}
-		;
+*/
+        ;
 id:
 		ID {$$ = strdup(yytext);}
 			
