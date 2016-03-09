@@ -1,0 +1,21 @@
+inteiro principal () {
+    inteiro divisor, numero, primo, resposta;
+    logico flag;
+    escreva ("Deseja saber os numeros primos ate qual numero: ");
+    leia ("%inteiro", numero);
+    escreva ("\n");
+    para (primo=2 ; numero - 1 ; 1) {
+        divisor = 2;
+        flag = false;
+        enquanto (divisor < raizquadrada (primo)) {
+            resposta = primo % divisor;
+            divisor++;
+            se (resposta == 0) {
+                flag = true;
+            }
+        }
+        se (!flag) {
+            escreva ("%inteiro ", primo);
+        }
+    }
+}

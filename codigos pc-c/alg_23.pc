@@ -1,0 +1,16 @@
+inteiro principal () {
+    inteiro i, j, v[10] = {10,9,8,7,6,5,4,3,2,1}, min, aux, tam = 10;
+    para (i=0 ; tam-2 ; 1) {
+      min = i;
+      para (j=i+1 ; tam-1 ; 1) {
+        se (v[j] < v[min])
+           min=j;
+      }
+      aux = v[i];
+      v[i] = v[min];
+      v[min] = aux;
+    }
+    para (i=0 ; tam-1 ; 1) {
+        escreva ("%inteiro ", v[i]);
+    }
+}
