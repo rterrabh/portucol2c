@@ -69,7 +69,7 @@ program:
 		| TRUE {fprintf(yyout,"true");}
 		| FALSE {fprintf(yyout,"false");}
 		| VOID {fprintf(yyout,"void");}
-		| SWITCH {fprintf(yyout,"switch");}
+//		| SWITCH {fprintf(yyout,"switch");}
 		| CASE {fprintf(yyout,"case");}
 		| DEFAULT {fprintf(yyout,"default");}
 		| BREAK {fprintf(yyout,"break");}
@@ -85,6 +85,9 @@ program:
 		| COMENTARIO {fprintf(yyout,"%s",yytext);}
 		| VIRGULA {fprintf(yyout,"%s",yytext);}
 		| PONTOEVIRGULA {fprintf(yyout,"%s",yytext);}
+        | STRING {
+            //trocar %real por %f, %inteiro por %d, etc.
+        }
 		| OTHER {fprintf(yyout,"Invalido. Input -> \"%s\"",yytext); }
 		;
 
@@ -110,8 +113,13 @@ tipo_entrada:   F
                 | I
                 ;
 
-scanf: SCANF ABREPARENTESE ASPAS tipo_entrada ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA
-        {fprintf(yyout,"scanf(\"", $4 ,"\",&", $7 ,");"); }
+ids:    id VIRGULA ids {fprintf(yyout,"&%s,",$1);} //talvez nao funcione e tenha que concatenar o $$
+        | id {fprintf(yyout,"&%s",$1);}
+        ;
+
+/*scanf de texto com uso de variaveis*/
+scanf: SCANF ABREPARENTESE STRING VIRGULA ids FECHAPARENTESE PONTOEVIRGULA
+        {fprintf(yyout,"scanf(\"", $3 ,"\",", $5 ,");"); }
 /*
 		SCANF ABREPARENTESE ASPAS C ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%c\",&%s);",$7);}
 		| SCANF ABREPARENTESE ASPAS F ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA {fprintf(yyout,"scanf(\"%%f\",&%s);",$7);}
@@ -138,7 +146,23 @@ soma:
 		SOMA {$$ = strdup(yytext);}
 			
 		;
+
+casos:  CASO numint DOISPONTOS:
+
+switch: ESCOLHA ABREPARENTESE ID FECHAPARENTESE
+        {};
+
+caseinteiros: NUMINT VIRGULA caseinteiros {fprintf(yyout,"case $1: $3"); }
+        | NUMINT {fprintf(yyout,"case $1:"); }
+            ;
+
+case: CASO caseinteiros DOISPONTOS
+        {fprintf(yyout,"$2"); }
+
+
 %%
+
+
 
 void yyerror(char *s) {
     fprintf(stderr, "%s\n", s);

@@ -56,8 +56,8 @@ case					"caso"
 default					"padrao"
 break					"interrompa"
 main					"principal"
-printf					"escreva"
-scanf					"leia"
+escreva					"escreva"
+leia					"leia"
 f						"%real"
 c						"%texto"
 i						"%inteiro"
@@ -71,6 +71,7 @@ virgula					","
 pontoevirgula			";"
 delim					[ \t\n]
 ws                      {delim}+
+string                  "\""[.]*"\""
 other                  	.
 
 %%
@@ -118,9 +119,9 @@ other                  	.
 {char}				{ return CHAR; }
 {void}				{ return VOID; }
 {main}				{ return MAIN; }
-{printf}			{ return PRINTF; }
-{scanf}				{ return SCANF; }
-{switch}			{ return SWITCH; }
+{escreva}			{ return ESCREVA; }
+{leia}				{ return LEIA; }
+{switch}			{ return SWITCH; } //Traduzir tudo
 {case}				{ return CASE; }
 {default}			{ return DEFAULT; }
 {break}				{ return BREAK; }
@@ -140,6 +141,7 @@ other                  	.
 {virgula}			{ return VIRGULA; }
 {pontoevirgula}		{ return PONTOEVIRGULA; }
 {relacional}		{ return RELACIONAL; }
+{string}            { return STRING; }
 {other}             { return OTHER; }
 %%
 /*------------------------ User subrotines ------------------------*/
