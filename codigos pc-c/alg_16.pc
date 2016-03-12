@@ -5,7 +5,7 @@ inteiro principal () {
         para (x=0 ; 3 ; 1) {
             escreva ("Linha: %inteiro ", i+1);
             escreva ("Coluna: %inteiro ", x+1);
-            leia (" %texto", matriz[x,i]);
+            leia (" %texto", matriz[x][i]);
         }
         escreva ("\n");
     }

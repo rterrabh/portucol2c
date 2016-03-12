@@ -58,47 +58,48 @@
      ECOMERCIAL = 274,
      INTERROGACAO = 275,
      EXCLAMACAO = 276,
-     SQRT = 277,
-     STRCAT = 278,
-     POW = 279,
-     TOUPPER = 280,
-     AND = 281,
-     OR = 282,
-     SOMA = 283,
+     RAIZQUADRADA = 277,
+     CONCATENA = 278,
+     POTENCIA = 279,
+     MAIUSCULA = 280,
+     E = 281,
+     OU = 282,
+     SOMASUB = 283,
      DIGITO = 284,
      NUMINT = 285,
      NUMREAL = 286,
-     IF = 287,
-     ELSE = 288,
-     DO = 289,
-     WHILE = 290,
-     FOR = 291,
-     RETURN = 292,
-     INT = 293,
-     FLOAT = 294,
-     CHAR = 295,
-     BOOL = 296,
-     TRUE = 297,
-     FALSE = 298,
-     VOID = 299,
-     SWITCH = 300,
-     CASE = 301,
-     DEFAULT = 302,
-     BREAK = 303,
-     MAIN = 304,
-     PRINTF = 305,
-     SCANF = 306,
-     F = 307,
-     C = 308,
-     I = 309,
+     SE = 287,
+     SENAO = 288,
+     FACA = 289,
+     ENQUANTO = 290,
+     PARA = 291,
+     RETORNE = 292,
+     INTEIRO = 293,
+     REAL = 294,
+     TEXTO = 295,
+     LOGICO = 296,
+     VERDADEIRO = 297,
+     FALSO = 298,
+     SEMRETORNO = 299,
+     ESCOLHA = 300,
+     CASO = 301,
+     PADRAO = 302,
+     INTERROMPA = 303,
+     PRINCIPAL = 304,
+     LEIA = 305,
+     ESCREVA = 306,
+     PORREAL = 307,
+     PORTEXTO = 308,
+     PORINTEIRO = 309,
      ID = 310,
-     MULT = 311,
+     MULTDIV = 311,
      RELACIONAL = 312,
      ATRIBUICAO = 313,
      COMENTARIO = 314,
      VIRGULA = 315,
      PONTOEVIRGULA = 316,
-     OTHER = 317
+     STRING = 317,
+     OTHER = 318
    };
 #endif
 /* Tokens.  */
@@ -121,47 +122,48 @@
 #define ECOMERCIAL 274
 #define INTERROGACAO 275
 #define EXCLAMACAO 276
-#define SQRT 277
-#define STRCAT 278
-#define POW 279
-#define TOUPPER 280
-#define AND 281
-#define OR 282
-#define SOMA 283
+#define RAIZQUADRADA 277
+#define CONCATENA 278
+#define POTENCIA 279
+#define MAIUSCULA 280
+#define E 281
+#define OU 282
+#define SOMASUB 283
 #define DIGITO 284
 #define NUMINT 285
 #define NUMREAL 286
-#define IF 287
-#define ELSE 288
-#define DO 289
-#define WHILE 290
-#define FOR 291
-#define RETURN 292
-#define INT 293
-#define FLOAT 294
-#define CHAR 295
-#define BOOL 296
-#define TRUE 297
-#define FALSE 298
-#define VOID 299
-#define SWITCH 300
-#define CASE 301
-#define DEFAULT 302
-#define BREAK 303
-#define MAIN 304
-#define PRINTF 305
-#define SCANF 306
-#define F 307
-#define C 308
-#define I 309
+#define SE 287
+#define SENAO 288
+#define FACA 289
+#define ENQUANTO 290
+#define PARA 291
+#define RETORNE 292
+#define INTEIRO 293
+#define REAL 294
+#define TEXTO 295
+#define LOGICO 296
+#define VERDADEIRO 297
+#define FALSO 298
+#define SEMRETORNO 299
+#define ESCOLHA 300
+#define CASO 301
+#define PADRAO 302
+#define INTERROMPA 303
+#define PRINCIPAL 304
+#define LEIA 305
+#define ESCREVA 306
+#define PORREAL 307
+#define PORTEXTO 308
+#define PORINTEIRO 309
 #define ID 310
-#define MULT 311
+#define MULTDIV 311
 #define RELACIONAL 312
 #define ATRIBUICAO 313
 #define COMENTARIO 314
 #define VIRGULA 315
 #define PONTOEVIRGULA 316
-#define OTHER 317
+#define STRING 317
+#define OTHER 318
 
 
 
