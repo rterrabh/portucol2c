@@ -1,0 +1,19 @@
+inteiro principal () {
+    texto tex1, tex2;
+    inteiro num;
+    escreva ("Texto 1: \n");
+    leia ("%texto", tex1);
+    escreva ("Texto 2: \n");
+    leia ("%texto", tex2);
+    escreva ("1 para concatenar. \n");
+    escreva ("2 para comparar. \n");
+    leia ("%inteiro",num);
+    se (num==1) {
+        escreva ("%texto\n", concatena(tex1,tex2));
+    } senao {
+        se (tex1 == tex2) {
+            escreva ("Os textos sao iguais");
+        } senao
+            escreva ("Os textos sao diferentes");
+    }
+}

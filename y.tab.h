@@ -39,131 +39,125 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     WS = 258,
-     QUEBRALINHA = 259,
-     ABRECHAVE = 260,
-     FECHACHAVE = 261,
-     ABRECOLCHETE = 262,
-     FECHACOLCHETE = 263,
-     ABREPARENTESE = 264,
-     FECHAPARENTESE = 265,
-     PORCENTAGEM = 266,
-     CONTRABARRA = 267,
-     ASPAS = 268,
-     UNDERLINE = 269,
-     PONTO = 270,
-     DOISPONTOS = 271,
-     ASPASIMPLES = 272,
-     CIFRAO = 273,
-     ECOMERCIAL = 274,
-     INTERROGACAO = 275,
-     EXCLAMACAO = 276,
-     RAIZQUADRADA = 277,
-     CONCATENA = 278,
-     POTENCIA = 279,
-     MAIUSCULA = 280,
-     E = 281,
-     OU = 282,
-     SOMASUB = 283,
-     DIGITO = 284,
-     NUMINT = 285,
-     NUMREAL = 286,
-     SE = 287,
-     SENAO = 288,
-     FACA = 289,
-     ENQUANTO = 290,
-     PARA = 291,
-     RETORNE = 292,
-     INTEIRO = 293,
-     REAL = 294,
-     TEXTO = 295,
-     LOGICO = 296,
-     VERDADEIRO = 297,
-     FALSO = 298,
-     SEMRETORNO = 299,
-     ESCOLHA = 300,
-     CASO = 301,
-     PADRAO = 302,
-     INTERROMPA = 303,
-     PRINCIPAL = 304,
-     LEIA = 305,
-     ESCREVA = 306,
-     PORREAL = 307,
-     PORTEXTO = 308,
-     PORINTEIRO = 309,
-     ID = 310,
-     MULTDIV = 311,
-     RELACIONAL = 312,
-     ATRIBUICAO = 313,
-     COMENTARIO = 314,
-     VIRGULA = 315,
-     PONTOEVIRGULA = 316,
-     STRING = 317,
-     OTHER = 318
+     ABRECHAVE = 258,
+     FECHACHAVE = 259,
+     ABRECOLCHETE = 260,
+     FECHACOLCHETE = 261,
+     ABREPARENTESE = 262,
+     FECHAPARENTESE = 263,
+     PORCENTAGEM = 264,
+     CONTRABARRA = 265,
+     ASPAS = 266,
+     UNDERLINE = 267,
+     PONTO = 268,
+     DOISPONTOS = 269,
+     ASPASIMPLES = 270,
+     CIFRAO = 271,
+     ECOMERCIAL = 272,
+     INTERROGACAO = 273,
+     EXCLAMACAO = 274,
+     RAIZQUADRADA = 275,
+     CONCATENA = 276,
+     POTENCIA = 277,
+     MAIUSCULA = 278,
+     E = 279,
+     OU = 280,
+     SOMASUB = 281,
+     DIGITO = 282,
+     NUMINT = 283,
+     NUMREAL = 284,
+     SE = 285,
+     SENAO = 286,
+     FACA = 287,
+     ENQUANTO = 288,
+     PARA = 289,
+     RETORNE = 290,
+     INTEIRO = 291,
+     REAL = 292,
+     TEXTO = 293,
+     LOGICO = 294,
+     VERDADEIRO = 295,
+     FALSO = 296,
+     SEMRETORNO = 297,
+     ESCOLHA = 298,
+     CASO = 299,
+     PADRAO = 300,
+     INTERROMPA = 301,
+     PRINCIPAL = 302,
+     LEIA = 303,
+     ESCREVA = 304,
+     PORREAL = 305,
+     PORTEXTO = 306,
+     PORINTEIRO = 307,
+     ID = 308,
+     MULTDIV = 309,
+     RELACIONAL = 310,
+     ATRIBUICAO = 311,
+     COMENTARIO = 312,
+     VIRGULA = 313,
+     PONTOEVIRGULA = 314,
+     STRING = 315
    };
 #endif
 /* Tokens.  */
-#define WS 258
-#define QUEBRALINHA 259
-#define ABRECHAVE 260
-#define FECHACHAVE 261
-#define ABRECOLCHETE 262
-#define FECHACOLCHETE 263
-#define ABREPARENTESE 264
-#define FECHAPARENTESE 265
-#define PORCENTAGEM 266
-#define CONTRABARRA 267
-#define ASPAS 268
-#define UNDERLINE 269
-#define PONTO 270
-#define DOISPONTOS 271
-#define ASPASIMPLES 272
-#define CIFRAO 273
-#define ECOMERCIAL 274
-#define INTERROGACAO 275
-#define EXCLAMACAO 276
-#define RAIZQUADRADA 277
-#define CONCATENA 278
-#define POTENCIA 279
-#define MAIUSCULA 280
-#define E 281
-#define OU 282
-#define SOMASUB 283
-#define DIGITO 284
-#define NUMINT 285
-#define NUMREAL 286
-#define SE 287
-#define SENAO 288
-#define FACA 289
-#define ENQUANTO 290
-#define PARA 291
-#define RETORNE 292
-#define INTEIRO 293
-#define REAL 294
-#define TEXTO 295
-#define LOGICO 296
-#define VERDADEIRO 297
-#define FALSO 298
-#define SEMRETORNO 299
-#define ESCOLHA 300
-#define CASO 301
-#define PADRAO 302
-#define INTERROMPA 303
-#define PRINCIPAL 304
-#define LEIA 305
-#define ESCREVA 306
-#define PORREAL 307
-#define PORTEXTO 308
-#define PORINTEIRO 309
-#define ID 310
-#define MULTDIV 311
-#define RELACIONAL 312
-#define ATRIBUICAO 313
-#define COMENTARIO 314
-#define VIRGULA 315
-#define PONTOEVIRGULA 316
-#define STRING 317
-#define OTHER 318
+#define ABRECHAVE 258
+#define FECHACHAVE 259
+#define ABRECOLCHETE 260
+#define FECHACOLCHETE 261
+#define ABREPARENTESE 262
+#define FECHAPARENTESE 263
+#define PORCENTAGEM 264
+#define CONTRABARRA 265
+#define ASPAS 266
+#define UNDERLINE 267
+#define PONTO 268
+#define DOISPONTOS 269
+#define ASPASIMPLES 270
+#define CIFRAO 271
+#define ECOMERCIAL 272
+#define INTERROGACAO 273
+#define EXCLAMACAO 274
+#define RAIZQUADRADA 275
+#define CONCATENA 276
+#define POTENCIA 277
+#define MAIUSCULA 278
+#define E 279
+#define OU 280
+#define SOMASUB 281
+#define DIGITO 282
+#define NUMINT 283
+#define NUMREAL 284
+#define SE 285
+#define SENAO 286
+#define FACA 287
+#define ENQUANTO 288
+#define PARA 289
+#define RETORNE 290
+#define INTEIRO 291
+#define REAL 292
+#define TEXTO 293
+#define LOGICO 294
+#define VERDADEIRO 295
+#define FALSO 296
+#define SEMRETORNO 297
+#define ESCOLHA 298
+#define CASO 299
+#define PADRAO 300
+#define INTERROMPA 301
+#define PRINCIPAL 302
+#define LEIA 303
+#define ESCREVA 304
+#define PORREAL 305
+#define PORTEXTO 306
+#define PORINTEIRO 307
+#define ID 308
+#define MULTDIV 309
+#define RELACIONAL 310
+#define ATRIBUICAO 311
+#define COMENTARIO 312
+#define VIRGULA 313
+#define PONTOEVIRGULA 314
+#define STRING 315
 
 
 

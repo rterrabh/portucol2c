@@ -1,0 +1,25 @@
+inteiro principal () {
+	inteiro cont,dv1,dv2,s1 = 0, s2 = 0;
+	texto cpf;
+	escreva ("Digite CPF:\n");
+	leia ("%texto", cpf);
+	para (cont=0 ; 8 ; 1)
+		s1 = s1 + (cont+1)*(cpf[cont]- '0');
+	dv1 = s1 % 11;
+	se (dv1==10)
+		dv1 = 0;
+	se (dv1==(cpf[9]- '0')) {
+        para (cont=0 ; 9 ; 1)
+            s2 += (cont)*(cpf[cont]- '0');
+        dv2 = s2 % 11;
+        se (dv2==10)
+            dv2 = 0;
+        se (dv2==(cpf[10]- '0')) {
+            escreva ("valido\n");
+        } senao {
+            escreva ("invalido\n");
+        }
+    } senao {
+        escreva ("invalido\n");
+    }
+}

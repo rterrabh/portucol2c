@@ -1073,7 +1073,7 @@ YY_RULE_SETUP
 case 59:
 YY_RULE_SETUP
 #line 147 "scanner.l"
-{ return OTHER; }
+{ /*sem acao, sem retorno */ }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP

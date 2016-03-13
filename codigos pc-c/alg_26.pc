@@ -1,0 +1,10 @@
+inteiro principal () {
+    texto time;
+    escreva ("Entre com o nome de um time de futebol:");
+    leia ("%texto", time);
+    se (time == "Fluminense" ou time == "Flamengo" ou time == "Vasco" ou time == "Botafogo") {
+            escreva ("E um time carioca.");
+    } senao se (time == "Sao Paulo" ou time == "Palmeiras" ou time == "Santos" ou time == "Corinthians") {
+            escreva ("E um time paulista.");
+    } senao escreva ("E de outro estado.");
+}

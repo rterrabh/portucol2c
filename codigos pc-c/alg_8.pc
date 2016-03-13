@@ -1,0 +1,22 @@
+inteiro principal () {
+    real nota1, nota2, nota3, nota4, nota5, media;
+    texto aluno;
+    escreva ("Digite o nome do aluno: ");
+    leia ("%texto", aluno);
+    escreva ("Digite a primeira nota: ");
+    leia ("%real", nota1);
+    escreva ("Digite a segunda nota: ");
+    leia ("%real", nota2);
+    escreva ("Digite a terceira nota: ");
+    leia ("%real", nota3);
+    escreva ("Digite a quarta nota: ");
+    leia ("%real", nota4);
+    escreva ("Digite a quinta nota: ");
+    leia ("%real", nota5);
+    media = (nota1 + nota2 + nota3 + nota4 + nota5) / 5;
+    se (media >= 7) {
+        escreva ("O aluno %texto passou", aluno);
+    } senao {
+        escreva ("O aluno %texto reprovou", aluno);
+    }
+}

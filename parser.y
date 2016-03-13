@@ -12,10 +12,10 @@
 	
 %}
 
-%token WS QUEBRALINHA ABRECHAVE FECHACHAVE ABRECOLCHETE FECHACOLCHETE ABREPARENTESE FECHAPARENTESE PORCENTAGEM CONTRABARRA ASPAS UNDERLINE
+%token ABRECHAVE FECHACHAVE ABRECOLCHETE FECHACOLCHETE ABREPARENTESE FECHAPARENTESE PORCENTAGEM CONTRABARRA ASPAS UNDERLINE
 %token PONTO DOISPONTOS ASPASIMPLES CIFRAO ECOMERCIAL INTERROGACAO EXCLAMACAO RAIZQUADRADA CONCATENA POTENCIA MAIUSCULA E OU SOMASUB DIGITO NUMINT NUMREAL
 %token SE SENAO FACA ENQUANTO PARA RETORNE INTEIRO REAL TEXTO LOGICO VERDADEIRO FALSO SEMRETORNO ESCOLHA CASO PADRAO INTERROMPA PRINCIPAL LEIA ESCREVA PORREAL PORTEXTO PORINTEIRO ID
-%token MULTDIV RELACIONAL ATRIBUICAO COMENTARIO VIRGULA PONTOEVIRGULA STRING OTHER
+%token MULTDIV RELACIONAL ATRIBUICAO COMENTARIO VIRGULA PONTOEVIRGULA STRING
 
 %%
 programs : programs program
@@ -23,11 +23,7 @@ programs : programs program
           ;
 
 program:
-		WS {fprintf(yyout," ");}
-		| QUEBRALINHA {fprintf(yyout,"\n");}
-		| ID {fprintf(yyout,"%s ",yytext);}
-		| id
-		| ABRECHAVE {fprintf(yyout,"%s",yytext);}
+	     ABRECHAVE {fprintf(yyout,"%s",yytext);}
 		| FECHACHAVE {fprintf(yyout,"%s",yytext);}
 		| ABRECOLCHETE {fprintf(yyout,"%s",yytext);}
 		| FECHACOLCHETE {fprintf(yyout,"%s",yytext);}
@@ -45,60 +41,93 @@ program:
 		| INTERROGACAO {fprintf(yyout,"%s",yytext);}
 		| EXCLAMACAO {fprintf(yyout,"%s",yytext);}
         | STRING {fprintf(yyout,"%s",yytext);}
-        | string
-		| RAIZQUADRADA {fprintf(yyout," sqrt");}
+        //| string
+        | RAIZQUADRADA {fprintf(yyout," sqrt");}
 		| CONCATENA {fprintf(yyout," strcat");}
 		| POTENCIA {fprintf(yyout," pow");}
 		| MAIUSCULA {fprintf(yyout," toupper");}
 		| E {fprintf(yyout," && ");}
 		| OU {fprintf(yyout," || ");}
 		| SOMASUB {fprintf(yyout,"%s",yytext);}
-		| somasub
-		| NUMINT {fprintf(yyout," %s ",yytext);}
-		| numint
+		//| somasub
+		| NUMINT {fprintf(yyout,"%s",yytext);}
+		//| numint
 		| NUMREAL {fprintf(yyout," %s ",yytext);}
-		| SE {fprintf(yyout," if");}
-		| SENAO {fprintf(yyout," else ");}
+		| se
+        | SE {fprintf(yyout," if ");}
+        | SENAO {fprintf(yyout," else ");}
 		| FACA {fprintf(yyout,"do");}
 		| ENQUANTO {fprintf(yyout,"while");}
-		| para
+        | para
+        | PARA {fprintf(yyout,"for");}
 		| RETORNE {fprintf(yyout,"return ");}
 		| INTEIRO {fprintf(yyout," int ");}
 		| REAL {fprintf(yyout," float ");}
 		| TEXTO {fprintf(yyout," char ");}
+        | textostring
 		| LOGICO {fprintf(yyout," bool ");}
 		| VERDADEIRO {fprintf(yyout," true ");}
 		| FALSO {fprintf(yyout," false ");}
 		| SEMRETORNO {fprintf(yyout," void ");}
 		| ESCOLHA {fprintf(yyout," switch ");}
-		| CASO {fprintf(yyout," case ");}
-		| PADRAO {fprintf(yyout," default ");}
+		| caso
+        | CASO {fprintf(yyout," case ");}
+        | PADRAO {fprintf(yyout," default ");}
 		| INTERROMPA {fprintf(yyout," break ");}
 		| PRINCIPAL {fprintf(yyout," main ");}
 		| LEIA {fprintf(yyout," scanf ");}
 		| leia
+        | printf
         | ESCREVA {fprintf(yyout," printf ");}
-        | escreva
-		| PORREAL {fprintf(yyout," %%f");}
-		| PORTEXTO {fprintf(yyout," %%c");}
+        | PORREAL {fprintf(yyout," %%f");}
+		| PORTEXTO {fprintf(yyout," %%s");}
 		| PORINTEIRO {fprintf(yyout," %%d");}
+        | ID {fprintf(yyout,"%s ",yytext);}
+		//| id
 		| MULTDIV {fprintf(yyout," %s",yytext);}
 		| RELACIONAL {fprintf(yyout," %s ",yytext);}
-		| ATRIBUICAO {fprintf(yyout," %s ",yytext);}
+        | relacional
+		| ATRIBUICAO {fprintf(yyout,"%s",yytext);}
 		| COMENTARIO {fprintf(yyout,"%s",yytext);}
 		| VIRGULA {fprintf(yyout," %s ",yytext);}
 		| PONTOEVIRGULA {fprintf(yyout,"%s",yytext);}
-		| OTHER //{fprintf(yyout,"Invalido. Input -> \"%s\"",yytext); }
 		;
 
+id:
+        ID {$$ = strdup(yytext);}
+			
+		;
+somasub:
+		SOMASUB {$$ = strdup(yytext);}
+			
+		;
+
+numint:
+		NUMINT {$$ = strdup(yytext);
+		}
+		;
+        
+string:
+		STRING {$$ = strdup(yytext);}
+			
+		;
 expr:   
         
          id 
         | numint
         ;
+
+parenteses:
+    ABREPARENTESE
+    | FECHAPARENTESE
+        ;
+
+relacional:
+        RELACIONAL {$$ = strdup(yytext);}
+        ;
         
 para:	
-        PARA ABREPARENTESE id ATRIBUICAO expr PONTOEVIRGULA expr PONTOEVIRGULA expr FECHAPARENTESE {
+        PARA parenteses id ATRIBUICAO expr PONTOEVIRGULA expr PONTOEVIRGULA expr parenteses {
 			int temp = atoi($9);
 			if(temp >= 0 ) 
 				fprintf(yyout,"for(%s = %s; %s <= %s; %s++)",$3,$5,$3,$7,$3);	
@@ -106,7 +135,7 @@ para:
 				fprintf(yyout,"for(%s = %s; %s >= %s; %s--)",$3,$5,$3,$7,$3);
 			}
          
-        | PARA ABREPARENTESE id ATRIBUICAO expr expr PONTOEVIRGULA expr PONTOEVIRGULA expr FECHAPARENTESE {
+        | PARA parenteses id ATRIBUICAO expr expr PONTOEVIRGULA expr PONTOEVIRGULA expr parenteses {
 			int temp = atoi($10);
 			if(temp >= 0 ) 
 				fprintf(yyout,"for(%s = %s%s; %s <= %s; %s++)",$3,$5,$6,$3,$8,$3);	
@@ -114,7 +143,7 @@ para:
 				fprintf(yyout,"for(%s = %s%s; %s >= %s; %s--)",$3,$5,$6,$3,$8,$3);
 			}
         
-        | PARA ABREPARENTESE id ATRIBUICAO expr PONTOEVIRGULA id somasub expr PONTOEVIRGULA expr FECHAPARENTESE {
+        | PARA parenteses id ATRIBUICAO expr PONTOEVIRGULA id somasub expr PONTOEVIRGULA expr parenteses {
             int temp = atoi($11);
 			if(temp >= 0 ) 
 				fprintf(yyout,"for(%s = %s; %s <= %s%s%s; %s++)",$3,$5,$3,$7,$8,$9,$3);	
@@ -122,7 +151,7 @@ para:
 				fprintf(yyout,"for(%s = %s; %s >= %s%s%s; %s--)",$3,$5,$3,$7,$8,$9,$3);
 			}
          
-         | PARA ABREPARENTESE id ATRIBUICAO expr PONTOEVIRGULA id expr PONTOEVIRGULA expr FECHAPARENTESE {
+         | PARA parenteses id ATRIBUICAO expr PONTOEVIRGULA id expr PONTOEVIRGULA expr parenteses {
             int temp = atoi($10);
 			if(temp >= 0 ) 
 				fprintf(yyout,"for(%s = %s; %s <= %s%s; %s++)",$3,$5,$3,$7,$8,$3);	
@@ -130,7 +159,7 @@ para:
 				fprintf(yyout,"for(%s = %s; %s >= %s%s; %s--)",$3,$5,$3,$7,$8,$3);
 			}
          
-         | PARA ABREPARENTESE id ATRIBUICAO id somasub id numint PONTOEVIRGULA expr PONTOEVIRGULA expr FECHAPARENTESE {
+         | PARA parenteses id ATRIBUICAO id somasub id numint PONTOEVIRGULA expr PONTOEVIRGULA expr parenteses {
             int temp = atoi($13);
 			if(temp >= 0 ) 
 				fprintf(yyout,"for(%s = %s%s%s%s; %s <= %s; %s++)",$3,$5,$6,$7,$8,$3,$10,$3);	
@@ -141,29 +170,24 @@ para:
                  
         ;
 		
-numint:
-		NUMINT {$$ = strdup(yytext);
-		}
-		;
 
-/*portipo:
-        portexto
-        | porinteiro
-        | porreal
+textostring:
+        TEXTO id PONTOEVIRGULA {
+            if(strcmp($2,"espaco") == 0) fprintf(yyout,"char *%s;",$2);
+            else fprintf(yyout,"char %s[100];",$2);
+            }
+        | TEXTO id VIRGULA id PONTOEVIRGULA {fprintf(yyout,"char %s[100], %s[100];",$2, $4);}
+        
+        | TEXTO id ABRECOLCHETE expr FECHACOLCHETE ABRECOLCHETE expr FECHACOLCHETE PONTOEVIRGULA {
+            fprintf(yyout,"char %s[%s][%s];",$2,$4,$7);}
+        
+        | TEXTO id  ABRECOLCHETE expr FECHACOLCHETE PONTOEVIRGULA {fprintf(yyout,"char %s[%s];",$2,$4);}
+        
+        | TEXTO id VIRGULA REAL id VIRGULA INTEIRO id {
+            fprintf(yyout,"char *%s, float *%s, int *%s",$2,$5,$8);}
+        
         ;
 
-portexto:
-        PORTEXTO {$$ = "%c";}
-        ;
-
-porinteiro:
-        PORINTEIRO {$$ = "%d";}
-        ;
- 
-porreal:
-        PORREAL {$$ = "%f";}
-        ;
-*/
 
 leia:
 
@@ -171,7 +195,7 @@ leia:
             char *result; 
             result = repl_str($3,"%inteiro","%d");
             result = repl_str(result,"%real","%f");
-            result = repl_str(result,"%texto","%c");
+            result = repl_str(result,"%texto"," %s");
             fprintf(yyout,"scanf(%s,&%s);",result,$5);
             free (result);
             }
@@ -180,7 +204,7 @@ leia:
                 char *result; 
                 result = repl_str($3,"%inteiro","%d");
                 result = repl_str(result,"%real","%f");
-                result = repl_str(result,"%texto","%c");
+                result = repl_str(result,"%texto"," %s");
                 fprintf(yyout,"scanf(%s,&%s[%s][%s]);",result,$5,$7,$10);
                 free (result);
            } 
@@ -189,7 +213,7 @@ leia:
             char *result; 
             result = repl_str($3,"%inteiro","%d");
             result = repl_str(result,"%real","%f");
-            result = repl_str(result,"%texto","%c");
+            result = repl_str(result,"%texto"," %s");
             fprintf(yyout,"scanf(%s,&%s[%s]);",result,$5,$7);
             free (result);
            } 
@@ -199,45 +223,16 @@ leia:
             char *result; 
             result = repl_str($3,"%inteiro","%d");
             result = repl_str(result,"%real","%f");
-            result = repl_str(result,"%texto","%c");
+            result = repl_str(result,"%texto"," %s");
             fprintf(yyout,"scanf(%s, &%s, &%s);",result,$5,$7);
             free (result);
            } 
             
-            
+        ;
         
-                
-		;
-        
-
-/*leia:
-
-		LEIA ABREPARENTESE ASPAS portipo ASPAS VIRGULA id FECHAPARENTESE PONTOEVIRGULA {
-            fprintf(yyout,"scanf(\"%s\",&%s);",$4,$7);}
-            
-		| LEIA ABREPARENTESE ASPAS portipo ASPAS VIRGULA id ABRECOLCHETE id FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-            fprintf(yyout,"scanf(\"%s\",&%s[%s]);",$4,$7,$9);}
-            
-		| LEIA ABREPARENTESE ASPAS portipo portipo ASPAS VIRGULA id VIRGULA id FECHAPARENTESE PONTOEVIRGULA {
-            fprintf(yyout,"scanf(\"%s %s\", &%s, &%s);",$4,$5,$8,$10);}
-            
-        | LEIA ABREPARENTESE ASPAS portipo ASPAS VIRGULA id ABRECOLCHETE expr VIRGULA expr FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-                fprintf(yyout,"scanf(\"\\n%s\",&%s[%s,%s]);",$4,$7,$9,$11);}
-		;
-*/
-id:
-		ID {$$ = strdup(yytext);}
-			
-		;
-somasub:
-		SOMASUB {$$ = strdup(yytext);}
-			
-		;
-        
-string:
-		STRING {$$ = strdup(yytext);}
-			
-		;
+printf:
+        escreva {fprintf(yyout,"%s",$1);};
+        ;
         
 escreva:
         ESCREVA ABREPARENTESE string {
@@ -245,15 +240,74 @@ escreva:
            char *result; 
                result = repl_str($3,"%inteiro","%d");
                result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%c");
+               result = repl_str(result,"%texto","%s");
                result = repl_str(result,"%.5real","%.5f");
                
-            fprintf(yyout,"printf(%s",result);
-            free (result);
            
-            
+            char aux[100] = "printf(";
+            strcat(aux,result);
+            free (result);
+            $$ = aux;
+     
          }
-         ;
+        ;
+        
+se:
+         SE parenteses id parenteses { fprintf(yyout,"if (%s)",$3);}
+         | SE parenteses EXCLAMACAO id parenteses { fprintf(yyout,"if (!%s)",$4);}
+         | SE parenteses id relacional numint parenteses { fprintf(yyout,"if (%s %s %s)",$3,$4,$5);}
+         | SE parenteses id relacional id parenteses { 
+            if (strcmp($4,"==") == 0 && strcmp($3,"tex1") == 0 && strcmp($5,"tex2") == 0) fprintf(yyout,"if (strcmp(%s,%s) == 0)",$3,$5);
+            else fprintf(yyout,"if (%s %s %s)",$3,$4,$5);
+            }
+         | SE parenteses parenteses id ABRECOLCHETE id FECHACOLCHETE PORCENTAGEM numint parenteses relacional expr parenteses{ 
+                fprintf(yyout,"if ((%s[%s] %% %s) %s %s)",$4,$6,$9,$11,$12);}
+         | SE parenteses MAIUSCULA parenteses id parenteses relacional ASPASIMPLES id ASPASIMPLES parenteses {
+                fprintf(yyout,"if (strcmp(toupper(%s),\"%s\") == 0)",$5,$9);}
+         | SE parenteses id relacional parenteses id ABRECOLCHETE expr FECHACOLCHETE somasub ASPASIMPLES numint ASPASIMPLES parenteses parenteses{
+                fprintf(yyout,"if (%s %s (%s[%s]%s'%s'))",$3,$4,$6,$8,$10,$12);}
+         | SE parenteses id relacional string OU id relacional string OU id relacional string OU id relacional string parenteses{
+                fprintf(yyout,"if (strcmp(%s,%s)==0 || strcmp(%s,%s)==0 || strcmp(%s,%s)==0 || strcmp(%s,%s)==0)",$3,$5,$7,$9,$11,$13,$15,$17);}
+         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id ABRECOLCHETE id expr FECHACOLCHETE parenteses{
+                fprintf(yyout,"if (%s[%s] %s %s[%s%s])",$3,$5,$7,$8,$10,$11);}
+         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id parenteses {
+                fprintf(yyout,"if (%s[%s] %s %s)",$3,$5,$7,$8);}
+         | SE parenteses id PORCENTAGEM id ABRECOLCHETE id FECHACOLCHETE relacional expr parenteses {
+                fprintf(yyout,"if (%s %% %s[%s] %s %s)",$3,$5,$7,$9,$10);}
+         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id ABRECOLCHETE id FECHACOLCHETE parenteses {
+                fprintf(yyout," if (%s[%s] %s %s[%s])",$3,$5,$7,$8,$10);}
+         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id ABRECOLCHETE id somasub id FECHACOLCHETE parenteses {
+                fprintf(yyout,"if (%s[%s] %s %s[%s%s%s])",$3,$5,$7,$8,$10,$11,$12);}
+         | SE parenteses id relacional id ABRECOLCHETE id FECHACOLCHETE parenteses {
+                fprintf(yyout,"if (%s %s %s[%s])",$3,$4,$5,$7);}
+      
+         
+        ;
+
+caso:
+        CASO parametros comandos {fprintf(yyout,"case %s %s",$2,$3);}
+        | CASO parametros {fprintf(yyout,"case %s",$2);}
+        
+        ;
+
+parametros:
+        numint DOISPONTOS { char aux[10]; strcpy(aux,$1); strcat(aux,": "); $$ = aux;}
+        | ASPASIMPLES somasub ASPASIMPLES DOISPONTOS  { char aux[10] = "'"; strcat(aux,$2); strcat(aux,"': "); $$ = aux;  }
+        | ASPASIMPLES MULTDIV ASPASIMPLES DOISPONTOS  { char aux[10] = "'*': "; $$ = aux; }
+        | numint VIRGULA numint VIRGULA numint DOISPONTOS  {  char aux[10]; strcpy(aux,$1); strcat(aux," ... "); strcat(aux,$5); strcat(aux,":");  $$ = aux; }
+        | numint VIRGULA numint VIRGULA numint VIRGULA numint DOISPONTOS  { char aux[10]; strcpy(aux,$1); strcat(aux," ... "); strcat(aux,$7); strcat(aux,":");  $$ = aux; }
+        
+        ;
+        
+comandos:
+        escreva FECHAPARENTESE PONTOEVIRGULA  { char aux[100]; strcpy(aux,$1); strcat(aux,"); break; "); $$ = aux; }
+        | id ABREPARENTESE id VIRGULA id VIRGULA id FECHAPARENTESE PONTOEVIRGULA  { 
+        char aux[100]; strcpy(aux,$1); strcat(aux,"("); strcat(aux,$3); strcat(aux,","); strcat(aux,$5); strcat(aux,","); strcat(aux,$7); strcat(aux,"); break; "); $$ = aux;   }
+        | id ATRIBUICAO id somasub id PONTOEVIRGULA  { char aux[100]; strcpy(aux,$1); strcat(aux,"="); strcat(aux,$3); strcat(aux,$4); strcat(aux,$5); strcat(aux,"; break; "); $$ = aux;  }
+        | id ATRIBUICAO id MULTDIV id PONTOEVIRGULA  { char aux[100]; strcpy(aux,$1); strcat(aux,"="); strcat(aux,$3); strcat(aux,"*"); strcat(aux,$5); strcat(aux,"; break; "); $$ = aux; }
+        ;
+        
+               
 %%
 
 void yyerror(char *s) {

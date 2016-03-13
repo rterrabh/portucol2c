@@ -144,7 +144,7 @@ other                  	.
 {pontoevirgula}		{ return PONTOEVIRGULA; }
 {relacional}		{ return RELACIONAL; }
 
-{other}             { return OTHER; }
+{other}             { /*sem acao, sem retorno */ }
 %%
 /*------------------------ User subrotines ------------------------*/
 
