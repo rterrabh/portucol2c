@@ -1,0 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+
+ void cadastrar(char produto[], float preco[], int *itens){char ler_op[100]; bool opcao= true ;while(opcao){if (*itens <= 1){printf("Cadastro de Produtos\n");printf("--------------------\n\n");printf("Produto: ");scanf(" %s",&produto[*itens]);printf("\n");printf("Preco: R$ ");scanf("%f",&preco[*itens]);*itens =*itens +1;opcao= true ;printf("\n");printf("Deseja cadastrar mais Produtos? (s/n): \n");scanf(" %s",&ler_op);if (strcmp(ler_op,"s") != 0){opcao= false ;}}else opcao= false ;}} void consultar(char produto[], float preco[], int *itens){ bool opcao= true ;int xi;printf("Mostra os Produtos \n");printf("--------------------\n");for(xi = 0; xi < *itens; xi++){printf("Produto: %c - Preco R$ %f\n",produto[xi], preco[xi] );}printf("\n");}int  main (){char produto[2]; float preco[2];int menu = 0;int itens = 0;while(menu < 3){printf("---------Menu-----------\n");printf("1- Cadastrar produto\n");printf("2- Consultar produto\n");printf("3- Sair\n");printf("-------------------------\n");printf("Escolha uma opcao: ");scanf("%d",&menu); switch (menu){case 1:  cadastrar(produto,preco,&itens); break; case 2:  consultar(produto,preco,&itens); break; case 3:  default :printf("Opcao invalida\n");}}}
