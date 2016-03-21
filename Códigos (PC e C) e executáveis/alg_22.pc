@@ -1,9 +1,0 @@
-inteiro principal () {
-	inteiro x, y, M;
-    escreva ("Digite um valor ");
-    leia ("%inteiro", x);
-    escreva ("Digite outro valor ");
-    leia ("%inteiro", y);
-    M = potencia (x,y);
-    escreva ("A potencia x ^ y e: %inteiro", M);
-}

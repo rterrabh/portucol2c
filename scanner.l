@@ -5,8 +5,8 @@
 
 
 /*Prototipo*/
-installID(){
-
+void installID(){
+    
 }
 
 %}
