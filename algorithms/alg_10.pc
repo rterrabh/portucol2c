@@ -1,0 +1,14 @@
+inteiro principal () {
+    inteiro n, p, t, u = 1;
+    escreva ("Numero : ");
+    leia ("%inteiro", n);
+    escreva ("Taxa : ");
+    leia ("%inteiro", p);
+    para (t=n-p+1 ; n ; 1) {
+        u = u * t;
+    }
+    para (t=2 ; p ; 1) {
+        u = u / t;
+    }
+    escreva ("Combinacao %inteiro elementos %inteiro a %inteiro = %inteiro", n, p, p, u);
+}

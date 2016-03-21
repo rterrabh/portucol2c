@@ -1,0 +1,21 @@
+inteiro principal () {
+    inteiro a, b, result;
+    texto operacao;
+    escreva ("Digite o primeiro numero: ");
+    leia ("%inteiro", a);
+    escreva ("Digite a operacao (+,-,*): ");
+    leia ("%texto", operacao);
+    escreva ("Digite o segundo numero: ");
+    leia ("%inteiro", b);
+    escolha (operacao) {
+        caso '+':
+            result = a + b;
+        caso '-':
+            result = a - b;
+        caso '*':
+            result = a * b;
+        padrao:
+            escreva ("Erro.");
+    }
+    escreva ("Resultado: %inteiro", result);
+}

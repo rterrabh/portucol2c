@@ -1,0 +1,22 @@
+﻿inteiro principal () {
+    inteiro ano[10], i, a, x;
+    real med, xm;
+    escreva ("Digite os anos com 4 numeros '9999' ou 0 para encerrar\n");
+    para (i=0 ; 3 ; 1) {
+        escreva ("Digite o ano da pessoa (%inteiro): ", i+1);
+        leia ("%inteiro", a);
+        se (a > 0) {
+            ano[i] = 2015 - a;
+        }
+    }
+    para (x=0 ; i ; 1) {
+        escreva("A idade da %inteiro pessoa e: %inteiro\n", x, ano[x]);
+        med = med + ano[x];
+    }
+
+    xm = med/i;
+
+    escreva ("Soma total das idades e: %real\n", med);
+    escreva ("Numero Total de pessoas: %inteiro\n", i);
+    escreva ("A idade media calculada: %real\n", xm);
+}

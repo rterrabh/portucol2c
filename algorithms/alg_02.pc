@@ -1,0 +1,32 @@
+inteiro principal () {
+    real xraiz, x1, x2, delta, a, b, c, b2;
+    escreva ("Digite o valor de 'A': ");
+    leia ("%real", a);
+    escreva ("Digite o valor de 'B': ");
+    leia ("%real", b);
+    escreva ("Digite o valor de 'C': ");
+    leia ("%real", c);
+
+    b2 = b*b;
+
+    xraiz = ((4 * a) * c);
+    delta = b2 - xraiz;
+
+    se (a == 0) {
+        escreva ("'A' tem que ser diferente de (0)");
+    } senao se (delta > 0) {
+		escreva ("Existem duas raizes 'possiveis'\n");
+		x1 = ((-b+raizquadrada(delta))/(2 * a));
+		x2 = ((-b-raizquadrada(delta))/(2 * a));
+		escreva ("A Primeira raiz X': %real\n", x1);
+		escreva ("A Segunda raiz X'': %real\n", x2);
+	} senao se (delta == 0) {
+		escreva ("As Duas raizes sao iguais \n");
+		x1 = (-b+raizquadrada(delta)) / (2 * a );
+		x2 = (-b-raizquadrada(delta)) / (2 * a );
+		escreva ("A Primeira raiz X': %real\n", x1);
+		escreva ("A Segunda raiz X'': %real\n", x2);
+	} senao {
+		escreva ("Nao pertence aos numeros reais");
+    }
+}

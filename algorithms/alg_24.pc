@@ -1,0 +1,13 @@
+inteiro principal () {
+   inteiro num, aux, resto, soma = 0;
+   escreva ("Digite um numero: ");
+   leia ("%inteiro", num);
+   aux = num;
+   enquanto (aux != 0) {
+      resto = aux % 10;
+      soma = soma + resto;
+      aux = aux / 10;
+   }
+   escreva ("Soma dos algarismos: %inteiro\n", soma);
+   retorne 0;
+}
