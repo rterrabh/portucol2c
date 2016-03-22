@@ -3334,6 +3334,7 @@ int main(int argc, char *argv[]){
 	fprintf(yyout,"#include <stdlib.h>\n");
 	fprintf(yyout,"#include <stdbool.h>\n");
 	fprintf(yyout,"#include <math.h>\n");
+    fprintf(yyout,"#include <string.h>\n");
 	fprintf(yyout,"\n");
 	yyin = fopen(argv[1], "r");
 	yyparse();

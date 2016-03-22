@@ -531,8 +531,8 @@ char *yytext;
 
 
 /*Prototipo*/
-installID(){
-
+void installID(){
+    
 }
 
 #line 539 "lex.yy.c"

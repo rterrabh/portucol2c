@@ -1,12 +1,11 @@
-rm -f log.txt
-rm -f resulted_c_files/*
-for file in *.pc; do
-	filename="${file%.*}"
-	.././portucol2c "${filename}.pc" "resulted_c_files/${filename}.c" >> log.txt 2>&1
-	echo "${filename}" "... Portucol (OK)"
-	astyle --style=java --suffix=none "resulted_c_files/${filename}.c" >> log.txt 2>&1
-	echo "$file" "... Indentation (OK)"
-	gcc -std=c99 -ansi "resulted_c_files/${filename}.c" >> log.txt 2>&1
-	echo "$file" "... GCC (OK)"
-done
-rm -f *.out
+@echo off
+del log.txt
+del resulted_c_files\*.* /Q
+for %%f in (*.pc) do (
+	"..\portucol2c" %%f "resulted_c_files\%%~nf.c" >> log.txt 2>&1
+	echo "%%~nf" "... Portucol (OK)"
+	astyle --style=java --suffix=none "resulted_c_files\%%~nf.c" >> log.txt
+	echo "%%~nf.c" "... Indentation (OK)"
+	gcc -o "resulted_c_files\%%~nf.exe" -std=c99 -ansi "resulted_c_files\%%~nf.c" >> log.txt 2>&1
+	echo "%%~nf.c" "... GCC (OK)"
+)

@@ -1,93 +1,38 @@
-Formatted  resulted_c_files/alg_01.c
-resulted_c_files/alg_01.c:22:25: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-            scanf(" %s",&ler_op);
-                    ~~  ^~~~~~~
-resulted_c_files/alg_01.c:23:17: warning: implicitly declaring library function 'strcmp' with type 'int (const char *, const char *)'
-            if (strcmp(ler_op,"s") != 0) {
-                ^
-resulted_c_files/alg_01.c:23:17: note: include the header <string.h> or explicitly provide a declaration for 'strcmp'
-2 warnings generated.
-Formatted  resulted_c_files/alg_02.c
-Formatted  resulted_c_files/alg_03.c
-Formatted  resulted_c_files/alg_04.c
-Formatted  resulted_c_files/alg_05.c
-Formatted  resulted_c_files/alg_06.c
-Formatted  resulted_c_files/alg_07.c
-Formatted  resulted_c_files/alg_08.c
-resulted_c_files/alg_08.c:10:17: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-    scanf(" %s",&aluno);
-            ~~  ^~~~~~
-1 warning generated.
-Formatted  resulted_c_files/alg_09.c
-Unchanged  resulted_c_files/alg_10.c
-Undefined symbols for architecture x86_64:
-  "_main", referenced from:
-     implicit entry/start for main executable
-ld: symbol(s) not found for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-Formatted  resulted_c_files/alg_11.c
-Formatted  resulted_c_files/alg_12.c
-Formatted  resulted_c_files/alg_13.c
-Formatted  resulted_c_files/alg_14.c
-Formatted  resulted_c_files/alg_15.c
-Formatted  resulted_c_files/alg_16.c
-Formatted  resulted_c_files/alg_17.c
-Formatted  resulted_c_files/alg_18.c
-resulted_c_files/alg_18.c:10:17: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-    scanf(" %s",&s);
-            ~~  ^~
-resulted_c_files/alg_18.c:11:7: warning: implicitly declaring library function 'strlen' with type 'unsigned long (const char *)'
-    x=strlen(s);
-      ^
-resulted_c_files/alg_18.c:11:7: note: include the header <string.h> or explicitly provide a declaration for 'strlen'
-2 warnings generated.
-Formatted  resulted_c_files/alg_19.c
-Formatted  resulted_c_files/alg_20.c
-Formatted  resulted_c_files/alg_21.c
-Formatted  resulted_c_files/alg_22.c
-Formatted  resulted_c_files/alg_23.c
-Formatted  resulted_c_files/alg_24.c
-Formatted  resulted_c_files/alg_25.c
-Formatted  resulted_c_files/alg_26.c
-resulted_c_files/alg_26.c:9:17: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-    scanf(" %s",&time);
-            ~~  ^~~~~
-resulted_c_files/alg_26.c:10:9: warning: implicitly declaring library function 'strcmp' with type 'int (const char *, const char *)'
-    if (strcmp(time,"Fluminense")==0 || strcmp(time,"Flamengo")==0 || strcmp(time,"Vasco")==0 || strcmp(time,"Botafogo")==0) {
-        ^
-resulted_c_files/alg_26.c:10:9: note: include the header <string.h> or explicitly provide a declaration for 'strcmp'
-2 warnings generated.
-Formatted  resulted_c_files/alg_27.c
-resulted_c_files/alg_27.c:10:17: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-    scanf(" %s",&cpf);
-            ~~  ^~~~
-1 warning generated.
-Formatted  resulted_c_files/alg_28.c
-resulted_c_files/alg_28.c:46:21: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-        scanf(" %s",&dc);
-                ~~  ^~~
-resulted_c_files/alg_28.c:47:13: warning: implicitly declaring library function 'strcmp' with type 'int (const char *, const char *)'
-        if (strcmp(toupper(dc),"N") == 0)k= false ;
-            ^
-resulted_c_files/alg_28.c:47:13: note: include the header <string.h> or explicitly provide a declaration for 'strcmp'
-resulted_c_files/alg_28.c:47:20: warning: incompatible integer to pointer conversion passing 'int' to parameter of type 'const char *' [-Wint-conversion]
-        if (strcmp(toupper(dc),"N") == 0)k= false ;
-                   ^~~~~~~~~~~
-3 warnings generated.
-Formatted  resulted_c_files/alg_29.c
-Formatted  resulted_c_files/alg_30.c
-resulted_c_files/alg_30.c:10:17: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-    scanf(" %s",&tex1);
-            ~~  ^~~~~
-resulted_c_files/alg_30.c:12:17: warning: format specifies type 'char *' but the argument has type 'char (*)[100]' [-Wformat]
-    scanf(" %s",&tex2);
-            ~~  ^~~~~
-resulted_c_files/alg_30.c:17:24: warning: implicitly declaring library function 'strcat' with type 'char *(char *, const char *)'
-        printf("%s\n", strcat(tex1,tex2));
-                       ^
-resulted_c_files/alg_30.c:17:24: note: include the header <string.h> or explicitly provide a declaration for 'strcat'
-resulted_c_files/alg_30.c:19:13: warning: implicitly declaring library function 'strcmp' with type 'int (const char *, const char *)'
-        if (strcmp(tex1,tex2) == 0) {
-            ^
-resulted_c_files/alg_30.c:19:13: note: include the header <string.h> or explicitly provide a declaration for 'strcmp'
-4 warnings generated.
+Formatado   resulted_c_files\alg_01.c
+Formatado   resulted_c_files\alg_02.c
+Formatado   resulted_c_files\alg_03.c
+Formatado   resulted_c_files\alg_04.c
+Formatado   resulted_c_files\alg_05.c
+Formatado   resulted_c_files\alg_06.c
+Formatado   resulted_c_files\alg_07.c
+Formatado   resulted_c_files\alg_08.c
+Formatado   resulted_c_files\alg_09.c
+Formatado   resulted_c_files\alg_10.c
+Formatado   resulted_c_files\alg_11.c
+Formatado   resulted_c_files\alg_12.c
+Formatado   resulted_c_files\alg_13.c
+Formatado   resulted_c_files\alg_14.c
+Formatado   resulted_c_files\alg_15.c
+Formatado   resulted_c_files\alg_16.c
+Formatado   resulted_c_files\alg_17.c
+Formatado   resulted_c_files\alg_18.c
+Formatado   resulted_c_files\alg_19.c
+Formatado   resulted_c_files\alg_20.c
+Formatado   resulted_c_files\alg_21.c
+Formatado   resulted_c_files\alg_22.c
+Formatado   resulted_c_files\alg_23.c
+Formatado   resulted_c_files\alg_24.c
+Formatado   resulted_c_files\alg_25.c
+Formatado   resulted_c_files\alg_26.c
+Formatado   resulted_c_files\alg_27.c
+Formatado   resulted_c_files\alg_28.c
+resulted_c_files\alg_28.c: In function 'main':
+resulted_c_files\alg_28.c:48:20: warning: passing argument 1 of 'strcmp' makes pointer from integer without a cast
+         if (strcmp(toupper(dc),"N") == 0)k= false ;
+                    ^
+In file included from resulted_c_files\alg_28.c:5:0:
+C:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include/string.h:53:15: note: expected 'const char *' but argument is of type 'int'
+   int __cdecl strcmp(const char *_Str1,const char *_Str2);
+               ^
+Formatado   resulted_c_files\alg_29.c
+Formatado   resulted_c_files\alg_30.c
