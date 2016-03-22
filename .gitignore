@@ -2,4 +2,5 @@
 *.class
 algorithms/resulted_c_files
 algorithms/.DS_Store
+algorithms/log.txt
 paper_toy_example/.DS_Store
