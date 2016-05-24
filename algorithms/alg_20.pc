@@ -7,9 +7,9 @@ inteiro principal () {
     para (primo=2 ; numero - 1 ; 1) {
         divisor = 2;
         flag = false;
-        enquanto (divisor < raizquadrada (primo)) {
+        enquanto (divisor <= raizquadrada (primo)) {
             resposta = primo % divisor;
-            divisor++;
+            divisor = divisor + 1;
             se (resposta == 0) {
                 flag = true;
             }

@@ -1,4 +1,4 @@
-﻿semretorno cadastrar (texto produto, real preco, inteiro itens) {
+semretorno cadastrar (texto produto, real preco, inteiro itens) {
     texto ler_op;
     logico opcao = verdadeiro;
     enquanto (opcao) {
@@ -14,7 +14,7 @@
             opcao = verdadeiro;
             escreva ("\n");
             escreva ("Deseja cadastrar mais Produtos? (s/n): \n");
-            leia ("%texto",ler_op);
+            leia ("%texto", ler_op);
             se (ler_op != 's') {
                 opcao = falso;
             }
@@ -27,8 +27,8 @@ semretorno consultar (texto produto, real preco, inteiro itens) {
     inteiro xi;
     escreva ("Mostra os Produtos \n");
     escreva ("--------------------\n");
-    para ( xi=0 ; itens ; 1) {
-        escreva ("Produto: %texto - Preco R$ %real\n", produto[xi], preco[xi]);
+    para (xi = 0; itens; 1) {
+        escreva ("Produto: %texto - Preço R$ %real\n", produto[xi], preco[xi]);
     }
     escreva ("\n");
 }
@@ -46,12 +46,12 @@ inteiro principal () {
         escreva ("3- Sair\n");
         escreva ("-------------------------\n");
         escreva ("Escolha uma opcao: ");
-        leia ("%inteiro",menu);
+        leia ("%inteiro", menu);
         escolha (menu){
             caso 1:
-                cadastrar(produto, preco,itens);
+                cadastrar(produto, preco, itens);
             caso 2:
-                consultar(produto, preco,itens);
+                consultar(produto, preco, itens);
             caso 3:
             padrao:
                 escreva ("Opcao invalida\n");

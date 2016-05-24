@@ -1,38 +1,45 @@
-Formatado   resulted_c_files\alg_01.c
-Formatado   resulted_c_files\alg_02.c
-Formatado   resulted_c_files\alg_03.c
-Formatado   resulted_c_files\alg_04.c
-Formatado   resulted_c_files\alg_05.c
-Formatado   resulted_c_files\alg_06.c
-Formatado   resulted_c_files\alg_07.c
-Formatado   resulted_c_files\alg_08.c
-Formatado   resulted_c_files\alg_09.c
-Formatado   resulted_c_files\alg_10.c
-Formatado   resulted_c_files\alg_11.c
-Formatado   resulted_c_files\alg_12.c
-Formatado   resulted_c_files\alg_13.c
-Formatado   resulted_c_files\alg_14.c
-Formatado   resulted_c_files\alg_15.c
-Formatado   resulted_c_files\alg_16.c
-Formatado   resulted_c_files\alg_17.c
-Formatado   resulted_c_files\alg_18.c
-Formatado   resulted_c_files\alg_19.c
-Formatado   resulted_c_files\alg_20.c
-Formatado   resulted_c_files\alg_21.c
-Formatado   resulted_c_files\alg_22.c
-Formatado   resulted_c_files\alg_23.c
-Formatado   resulted_c_files\alg_24.c
-Formatado   resulted_c_files\alg_25.c
-Formatado   resulted_c_files\alg_26.c
-Formatado   resulted_c_files\alg_27.c
-Formatado   resulted_c_files\alg_28.c
+Formatted  resulted_c_files\alg_01.c
+resulted_c_files\alg_01.c: In function 'cadastrar':
+resulted_c_files\alg_01.c:15:13: warning: passing argument 1 of 'gets' makes pointer from integer without a cast [enabled by default]
+In file included from resulted_c_files\alg_01.c:1:0:
+e:\codeblocks\mingw\bin\../lib/gcc/mingw32/4.7.1/../../../../include/stdio.h:357:39: note: expected 'char *' but argument is of type 'char'
+Formatted  resulted_c_files\alg_02.c
+Formatted  resulted_c_files\alg_03.c
+Formatted  resulted_c_files\alg_04.c
+Formatted  resulted_c_files\alg_05.c
+Formatted  resulted_c_files\alg_06.c
+Formatted  resulted_c_files\alg_07.c
+Formatted  resulted_c_files\alg_08.c
+Formatted  resulted_c_files\alg_09.c
+Formatted  resulted_c_files\alg_10.c
+Formatted  resulted_c_files\alg_11.c
+Formatted  resulted_c_files\alg_12.c
+Formatted  resulted_c_files\alg_13.c
+Formatted  resulted_c_files\alg_14.c
+Formatted  resulted_c_files\alg_15.c
+Formatted  resulted_c_files\alg_16.c
+resulted_c_files\alg_16.c: In function 'main':
+resulted_c_files\alg_16.c:14:13: warning: passing argument 1 of 'gets' makes pointer from integer without a cast [enabled by default]
+In file included from resulted_c_files\alg_16.c:1:0:
+e:\codeblocks\mingw\bin\../lib/gcc/mingw32/4.7.1/../../../../include/stdio.h:357:39: note: expected 'char *' but argument is of type 'char'
+Formatted  resulted_c_files\alg_17.c
+Formatted  resulted_c_files\alg_18.c
+Formatted  resulted_c_files\alg_19.c
+Formatted  resulted_c_files\alg_20.c
+Formatted  resulted_c_files\alg_21.c
+Formatted  resulted_c_files\alg_22.c
+Formatted  resulted_c_files\alg_23.c
+Formatted  resulted_c_files\alg_24.c
+Formatted  resulted_c_files\alg_25.c
+Formatted  resulted_c_files\alg_26.c
+Formatted  resulted_c_files\alg_27.c
+resulted_c_files\alg_27.c: In function 'main':
+resulted_c_files\alg_27.c:12:65: error: subscripted value is neither array nor pointer nor vector
+resulted_c_files\alg_27.c:15:18: error: subscripted value is neither array nor pointer nor vector
+resulted_c_files\alg_27.c:16:67: error: subscripted value is neither array nor pointer nor vector
+resulted_c_files\alg_27.c:19:22: error: subscripted value is neither array nor pointer nor vector
+Formatted  resulted_c_files\alg_28.c
 resulted_c_files\alg_28.c: In function 'main':
-resulted_c_files\alg_28.c:48:20: warning: passing argument 1 of 'strcmp' makes pointer from integer without a cast
-         if (strcmp(toupper(dc),"N") == 0)k= false ;
-                    ^
-In file included from resulted_c_files\alg_28.c:5:0:
-C:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include/string.h:53:15: note: expected 'const char *' but argument is of type 'int'
-   int __cdecl strcmp(const char *_Str1,const char *_Str2);
-               ^
-Formatado   resulted_c_files\alg_29.c
-Formatado   resulted_c_files\alg_30.c
+resulted_c_files\alg_28.c:14:12: error: incompatible types when assigning to type 'char[50]' from type 'char *'
+Formatted  resulted_c_files\alg_29.c
+Formatted  resulted_c_files\alg_30.c

@@ -17,27 +17,22 @@ abrecolchete			"["
 fechacolchete			"]"
 abreparentese			"("
 fechaparentese			")"
-porcentagem				"%"
-contrabarra				("\\")
-aspas					["]
 underline				"_"
-ponto					"."
 doispontos				":"
 aspasimples				"'"
-cifrao					"$"
-ecomercial				"&"
-interrogacao			"?"
 exclamacao				"!"
 string                  \"[^"\n]*["\n]
+caractere				'([^'\\\n]|\\.)'
 raizquadrada			"raizquadrada"
 concatena				"concatena"
 potencia				"potencia"
 maiuscula				"maiuscula"
+tamanhotexto			"tamanhotexto"
 e						"e"
 ou						"ou"
 somasub					("+"|"-")
 digito					[0-9]
-numint					[+-]?{digito}+
+numint					{digito}+
 letra					[a-z|A-Z]
 se						"se"
 senao					"senao"
@@ -63,8 +58,8 @@ porreal					"%real"
 portexto				"%texto"
 porinteiro				"%inteiro"
 id						{letra}(({letra}|{digito})|({letra}|{digito}|{underline}))*
-numreal					[+-]?{digito}+(\.{digito}+)?([E][+-]?{digito}+)?
-multdiv					("*"|"/")
+numreal					{digito}+(\.{digito}+)?([E][+-]?{digito}+)?
+multdiv					("*"|"/"|"%")
 relacional				("<"|">"|"=="|">="|"<="|"!=")
 atribuicao				"="
 comentario				"/*"((\*+[^/*])|([^*]))*\**"*/"
@@ -87,27 +82,21 @@ other                  	.
 						}
 					}
 {string}            { return STRING; }
+{caractere}			{ return CARACTERE; }
 {abrechave}			{ return ABRECHAVE; }
 {fechachave}		{ return FECHACHAVE; }
 {abrecolchete}		{ return ABRECOLCHETE; }
 {fechacolchete}		{ return FECHACOLCHETE; }
 {abreparentese}		{ return ABREPARENTESE;	}
 {fechaparentese}	{ return FECHAPARENTESE; }
-{porcentagem}		{ return PORCENTAGEM; }
-{contrabarra}		{ return CONTRABARRA; }
-{aspas}				{ return ASPAS; }
-{underline}			{ return UNDERLINE; }
-{ponto}				{ return PONTO;}
 {doispontos}		{ return DOISPONTOS; }
 {aspasimples}		{ return ASPASIMPLES; }
-{cifrao}			{ return CIFRAO; }
-{ecomercial}		{ return ECOMERCIAL; }
-{interrogacao}		{ return INTERROGACAO; }
 {exclamacao}		{ return EXCLAMACAO; }
 {raizquadrada}		{ return RAIZQUADRADA; }
 {concatena}			{ return CONCATENA; }
 {potencia}			{ return POTENCIA; }
 {maiuscula}			{ return MAIUSCULA; }
+{tamanhotexto}		{ return TAMANHOTEXTO; }
 {e}				    { return E; }
 {ou}				{ return OU; }
 {real}				{ return REAL; }

@@ -3,11 +3,11 @@ inteiro principal () {
     inteiro i, x;
     escreva ("Digite um nome : ");
     leia ("%texto", s);
-    x = strlen(s);
+    x = tamanhotexto(s);
     inteiro j = 0;
     para (i=x-1 ; 0 ; -1) {
         c[j] = s[i];
-        j++;
+        j = j + 1;
     }
     c[j] = '\0';
     escreva ("%texto", c);

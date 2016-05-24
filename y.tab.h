@@ -45,58 +45,52 @@
      FECHACOLCHETE = 261,
      ABREPARENTESE = 262,
      FECHAPARENTESE = 263,
-     PORCENTAGEM = 264,
-     CONTRABARRA = 265,
-     ASPAS = 266,
-     UNDERLINE = 267,
-     PONTO = 268,
-     DOISPONTOS = 269,
-     ASPASIMPLES = 270,
-     CIFRAO = 271,
-     ECOMERCIAL = 272,
-     INTERROGACAO = 273,
-     EXCLAMACAO = 274,
-     RAIZQUADRADA = 275,
-     CONCATENA = 276,
-     POTENCIA = 277,
-     MAIUSCULA = 278,
-     E = 279,
-     OU = 280,
-     SOMASUB = 281,
-     DIGITO = 282,
-     NUMINT = 283,
-     NUMREAL = 284,
-     SE = 285,
-     SENAO = 286,
-     FACA = 287,
-     ENQUANTO = 288,
-     PARA = 289,
-     RETORNE = 290,
-     INTEIRO = 291,
-     REAL = 292,
-     TEXTO = 293,
-     LOGICO = 294,
-     VERDADEIRO = 295,
-     FALSO = 296,
-     SEMRETORNO = 297,
-     ESCOLHA = 298,
-     CASO = 299,
-     PADRAO = 300,
-     INTERROMPA = 301,
-     PRINCIPAL = 302,
-     LEIA = 303,
-     ESCREVA = 304,
-     PORREAL = 305,
-     PORTEXTO = 306,
-     PORINTEIRO = 307,
-     ID = 308,
-     MULTDIV = 309,
-     RELACIONAL = 310,
-     ATRIBUICAO = 311,
-     COMENTARIO = 312,
-     VIRGULA = 313,
-     PONTOEVIRGULA = 314,
-     STRING = 315
+     DOISPONTOS = 264,
+     ASPASIMPLES = 265,
+     EXCLAMACAO = 266,
+     RAIZQUADRADA = 267,
+     CONCATENA = 268,
+     POTENCIA = 269,
+     MAIUSCULA = 270,
+     TAMANHOTEXTO = 271,
+     E = 272,
+     OU = 273,
+     SOMASUB = 274,
+     NUMINT = 275,
+     NUMREAL = 276,
+     SE = 277,
+     SENAO = 278,
+     FACA = 279,
+     ENQUANTO = 280,
+     PARA = 281,
+     RETORNE = 282,
+     INTEIRO = 283,
+     REAL = 284,
+     TEXTO = 285,
+     LOGICO = 286,
+     VERDADEIRO = 287,
+     FALSO = 288,
+     SEMRETORNO = 289,
+     ESCOLHA = 290,
+     CASO = 291,
+     PADRAO = 292,
+     INTERROMPA = 293,
+     PRINCIPAL = 294,
+     LEIA = 295,
+     ESCREVA = 296,
+     PORREAL = 297,
+     PORTEXTO = 298,
+     PORINTEIRO = 299,
+     ID = 300,
+     MULTDIV = 301,
+     RELACIONAL = 302,
+     ATRIBUICAO = 303,
+     COMENTARIO = 304,
+     VIRGULA = 305,
+     PONTOEVIRGULA = 306,
+     STRING = 307,
+     CARACTERE = 308,
+     LOWER_THAN_SENAO = 309
    };
 #endif
 /* Tokens.  */
@@ -106,58 +100,52 @@
 #define FECHACOLCHETE 261
 #define ABREPARENTESE 262
 #define FECHAPARENTESE 263
-#define PORCENTAGEM 264
-#define CONTRABARRA 265
-#define ASPAS 266
-#define UNDERLINE 267
-#define PONTO 268
-#define DOISPONTOS 269
-#define ASPASIMPLES 270
-#define CIFRAO 271
-#define ECOMERCIAL 272
-#define INTERROGACAO 273
-#define EXCLAMACAO 274
-#define RAIZQUADRADA 275
-#define CONCATENA 276
-#define POTENCIA 277
-#define MAIUSCULA 278
-#define E 279
-#define OU 280
-#define SOMASUB 281
-#define DIGITO 282
-#define NUMINT 283
-#define NUMREAL 284
-#define SE 285
-#define SENAO 286
-#define FACA 287
-#define ENQUANTO 288
-#define PARA 289
-#define RETORNE 290
-#define INTEIRO 291
-#define REAL 292
-#define TEXTO 293
-#define LOGICO 294
-#define VERDADEIRO 295
-#define FALSO 296
-#define SEMRETORNO 297
-#define ESCOLHA 298
-#define CASO 299
-#define PADRAO 300
-#define INTERROMPA 301
-#define PRINCIPAL 302
-#define LEIA 303
-#define ESCREVA 304
-#define PORREAL 305
-#define PORTEXTO 306
-#define PORINTEIRO 307
-#define ID 308
-#define MULTDIV 309
-#define RELACIONAL 310
-#define ATRIBUICAO 311
-#define COMENTARIO 312
-#define VIRGULA 313
-#define PONTOEVIRGULA 314
-#define STRING 315
+#define DOISPONTOS 264
+#define ASPASIMPLES 265
+#define EXCLAMACAO 266
+#define RAIZQUADRADA 267
+#define CONCATENA 268
+#define POTENCIA 269
+#define MAIUSCULA 270
+#define TAMANHOTEXTO 271
+#define E 272
+#define OU 273
+#define SOMASUB 274
+#define NUMINT 275
+#define NUMREAL 276
+#define SE 277
+#define SENAO 278
+#define FACA 279
+#define ENQUANTO 280
+#define PARA 281
+#define RETORNE 282
+#define INTEIRO 283
+#define REAL 284
+#define TEXTO 285
+#define LOGICO 286
+#define VERDADEIRO 287
+#define FALSO 288
+#define SEMRETORNO 289
+#define ESCOLHA 290
+#define CASO 291
+#define PADRAO 292
+#define INTERROMPA 293
+#define PRINCIPAL 294
+#define LEIA 295
+#define ESCREVA 296
+#define PORREAL 297
+#define PORTEXTO 298
+#define PORINTEIRO 299
+#define ID 300
+#define MULTDIV 301
+#define RELACIONAL 302
+#define ATRIBUICAO 303
+#define COMENTARIO 304
+#define VIRGULA 305
+#define PONTOEVIRGULA 306
+#define STRING 307
+#define CARACTERE 308
+#define LOWER_THAN_SENAO 309
 
 
 

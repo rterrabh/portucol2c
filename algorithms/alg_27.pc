@@ -10,7 +10,7 @@ inteiro principal () {
 		dv1 = 0;
 	se (dv1==(cpf[9]- '0')) {
         para (cont=0 ; 9 ; 1)
-            s2 += (cont)*(cpf[cont]- '0');
+            s2 = s2 + (cont)*(cpf[cont]- '0');
         dv2 = s2 % 11;
         se (dv2==10)
             dv2 = 0;

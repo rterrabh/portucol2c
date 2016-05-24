@@ -14,6 +14,6 @@ inteiro principal () {
     escreva (" Mostrando so a coluna 3 \n");
     escreva ("\n");
     para (i=0 ; 3 ; 1) {
-        escreva ("%texto", matriz[2][i]);
+        escreva ("%texto", matriz[i][0]);
     }
 }

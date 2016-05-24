@@ -3,7 +3,7 @@ inteiro principal () {
     escreva ("Entre com a nota do aluno:");
     leia ("%inteiro", nota);
     escolha (nota){
-        caso 0, 1, 2 :
+        caso 0, 1, 2, 3:
             escreva ("Reprovado.\n");
         caso 4, 5, 6, 7:
             escreva ("Em final.\n");

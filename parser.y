@@ -10,647 +10,899 @@
 	extern FILE *yyin, *yyout;
 	extern char* yytext;
 	
+	struct table {
+		char tipo[10];
+		char nome[30];
+		char vet[100];
+		int flag_param;
+		int flag_char;
+	};
+	
+	struct table tabela[300];
+	int current_tab_tipo = 0, current_tab_nome = 0;
+	int ident = 0;
 %}
-
-%token ABRECHAVE FECHACHAVE ABRECOLCHETE FECHACOLCHETE ABREPARENTESE FECHAPARENTESE PORCENTAGEM CONTRABARRA ASPAS UNDERLINE
-%token PONTO DOISPONTOS ASPASIMPLES CIFRAO ECOMERCIAL INTERROGACAO EXCLAMACAO RAIZQUADRADA CONCATENA POTENCIA MAIUSCULA E OU SOMASUB DIGITO NUMINT NUMREAL
+%token ABRECHAVE FECHACHAVE ABRECOLCHETE FECHACOLCHETE ABREPARENTESE FECHAPARENTESE
+%token DOISPONTOS ASPASIMPLES EXCLAMACAO RAIZQUADRADA CONCATENA POTENCIA MAIUSCULA TAMANHOTEXTO E OU SOMASUB NUMINT NUMREAL
 %token SE SENAO FACA ENQUANTO PARA RETORNE INTEIRO REAL TEXTO LOGICO VERDADEIRO FALSO SEMRETORNO ESCOLHA CASO PADRAO INTERROMPA PRINCIPAL LEIA ESCREVA PORREAL PORTEXTO PORINTEIRO ID
-%token MULTDIV RELACIONAL ATRIBUICAO COMENTARIO VIRGULA PONTOEVIRGULA STRING
+%token MULTDIV RELACIONAL ATRIBUICAO COMENTARIO VIRGULA PONTOEVIRGULA STRING CARACTERE
 
+%nonassoc LOWER_THAN_SENAO
+%nonassoc SENAO
+%left  SOMASUB
+%left  MULTDIV
 %%
-programs : programs program
-          | program
-          ;
+programa 			: declaracao_lista { fprintf(yyout,"%s", $1); }
+				  ;
+declaracao_lista 		: declaracao	{ 	
+											char aux[10000];
+											strcpy(aux, $1);
+											int i;
+											char *result;
+											for(i = 0; i<current_tab_tipo ; i++){
+												if(tabela[i].flag_param == 1){
+													char temp_par[10];
+													char result_par[15];
+													char temp_vir[10];
+													char result_vir[20];
+													
+													strcpy(temp_par, "(");
+													strcat(temp_par, tabela[i].tipo);
+													strcpy(result_par, temp_par);
+													strcat(result_par, "*");
+													strcat(temp_par, tabela[i].nome);
+													strcat(result_par, tabela[i].nome);
+													
+													strcpy(temp_vir, ", ");
+													strcat(temp_vir, tabela[i].tipo);
+													strcpy(result_vir, temp_vir);
+													strcat(result_vir, "*");
+													strcat(temp_vir, tabela[i].nome);
+													strcat(result_vir, tabela[i].nome);
+													
+													result = repl_str(aux, temp_par, result_par);
+													result = repl_str(result, temp_vir, result_vir);
+													strcpy(aux, result);
+												}
+												if(tabela[i].flag_char == 1){
+													char temp_decl[40];
+													char result_decl[40];
+													char temp_gets[70];
+													char result_gets[90];
+													
+													strcpy(temp_decl, tabela[i].nome);
+													strcat(temp_decl, "[50]");
+													strcpy(result_decl, tabela[i].nome);
+													
+													strcpy(temp_gets, "gets(");
+													strcat(temp_gets, tabela[i].nome);
+													strcat(temp_gets, ")");
+													strcpy(result_gets, "scanf(\" %c\", ");
+													strcat(result_gets, tabela[i].nome);
+													strcat(result_gets, ")");
+													
+													result = repl_str(aux, temp_decl, result_decl);
+													result = repl_str(result, temp_gets, result_gets);
+													strcpy(aux, result);
+												}
+											}
+											free(result);
+											$$ = strdup(aux);
+										}
+				| declaracao declaracao_lista		{
+														char aux[10000];
+														strcpy(aux, $1);
+														strcat(aux, $2);
+														int i;
+														char *result;
+														for(i = 0; i<current_tab_tipo ; i++){
+															if(tabela[i].flag_param == 1){
+																char temp_par[10];
+																char result_par[15];
+																char temp_vir[10];
+																char result_vir[20];
+																
+																strcpy(temp_par, "(");
+																strcat(temp_par, tabela[i].tipo);
+																strcpy(result_par, temp_par);
+																strcat(result_par, "*");
+																strcat(temp_par, tabela[i].nome);
+																strcat(result_par, tabela[i].nome);
+																
+																strcpy(temp_vir, ", ");
+																strcat(temp_vir, tabela[i].tipo);
+																strcpy(result_vir, temp_vir);
+																strcat(result_vir, "*");
+																strcat(temp_vir, tabela[i].nome);
+																strcat(result_vir, tabela[i].nome);
+																
+																result = repl_str(aux, temp_par, result_par);
+																result = repl_str(result, temp_vir, result_vir);
+																strcpy(aux, result);
+															}
+															if(tabela[i].flag_char == 1){
+																char temp_decl[40];
+																char result_decl[40];
+																char temp_gets[70];
+																char result_gets[90];
+																
+																strcpy(temp_decl, tabela[i].nome);
+																strcat(temp_decl, "[50]");
+																strcpy(result_decl, tabela[i].nome);
+																
+																strcpy(temp_gets, "gets(");
+																strcat(temp_gets, tabela[i].nome);
+																strcat(temp_gets, ")");
+																strcpy(result_gets, "scanf(\" %c\", ");
+																strcat(result_gets, tabela[i].nome);
+																strcat(result_gets, ")");
+																
+																result = repl_str(aux, temp_decl, result_decl);
+																result = repl_str(result, temp_gets, result_gets);
+																strcpy(aux, result);
+															}
+														}
+														free(result);
+														$$ = strdup(aux);
+													}
+				  ;
+declaracao 			: var_declaracao
+				| fun_declaracao
+		  		  ;
+var_declaracao 			: tipo_especificador var_declaracao_meio		{
+																			char aux[100];
+																			strcpy(aux, $1);
+																			strcat(aux, $2);
+																			while(current_tab_tipo < current_tab_nome){
+																				strcpy(tabela[current_tab_tipo].tipo, $1);
+																				current_tab_tipo++;
+																			}
+																			$$ = strdup(aux);
+																		}
+				| TEXTO decl_texto		{
+											char aux[100];
+											strcpy(aux, "char ");
+											strcat(aux, $2);
+											$$ = strdup(aux);
+										}
+			  	  ;
+decl_texto				: id decl_texto_vet decl_texto_fat		{
+													char aux[100];
+													strcpy(aux, $1);
+													strcat(aux, $2);
+													strcpy(tabela[current_tab_nome].nome, $1);
+													if(strstr($2, "[") == NULL){
+														strcat(aux, "[50]");
+														strcpy(tabela[current_tab_nome].vet, "[50]");
+													}
+													strcpy(tabela[current_tab_tipo].tipo, "char ");
+													strcpy(tabela[current_tab_nome].vet, $2);
+													current_tab_tipo++;
+													current_tab_nome++;
+													strcat(aux, $3);
+													$$ = strdup(aux);
+												}
+				  ;
+decl_texto_vet			: ABRECOLCHETE numint FECHACOLCHETE ATRIBUICAO var_vet_atr		{
+																							char aux[200];
+																							strcpy(aux, "[");
+																							strcat(aux, $2);
+																							strcat(aux, "] = ");
+																							tabela[current_tab_nome].flag_char = 1;
+																							strcat(aux, $5);
+																							$$ = strdup(aux);
+																						}
+				| ABRECOLCHETE numint FECHACOLCHETE decl_texto_vet		{
+																			char aux[100];
+																			strcpy(aux, "[");
+																			strcat(aux, $2);
+																			strcat(aux, "]");
+																			tabela[current_tab_nome].flag_char = 1;
+																			strcat(aux, $4);
+																			$$ = strdup(aux);
+																		}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+decl_texto_fat			: VIRGULA decl_texto		{
+															char aux[100];
+															strcpy(aux, ", ");
+															strcat(aux, $2);
+															$$ = strdup(aux);
+														}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+var_declaracao_meio		: id var_declaracao_vet var_declaracao_fat		{
+																			char aux[100];
+																			strcpy(aux, $1);
+																			strcat(aux, $2);
+																			strcpy(tabela[current_tab_nome].nome, $1);
+																			strcpy(tabela[current_tab_nome].vet, $2);
+																			current_tab_nome++;
+																			strcat(aux, $3);
+																			$$ = strdup(aux);
+																		}
+				  ;
+var_declaracao_vet 		: ABRECOLCHETE numint FECHACOLCHETE ATRIBUICAO var_vet_atr		{
+																							char aux[200];
+																							strcpy(aux, "[");
+																							strcat(aux, $2);
+																							strcat(aux, "] = ");
+																							strcat(aux, $5);
+																							$$ = strdup(aux);
+																						}
+				| ABRECOLCHETE numint FECHACOLCHETE var_declaracao_vet		{
+																					char aux[100];
+																					strcpy(aux, "[");
+																					strcat(aux, $2);
+																					strcat(aux, "]");
+																					strcat(aux, $4);
+																					$$ = strdup(aux);
+																			}
+				| ATRIBUICAO expressao		{
+												char aux[100];
+												strcpy(aux, " = ");
+												strcat(aux, $2);
+												$$ = strdup(aux);
+											}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+var_declaracao_fat		: VIRGULA var_declaracao_meio		{
+																char aux[100];
+																strcpy(aux, ", ");
+																strcat(aux, $2);
+																$$ = strdup(aux);
+															}
+				| PONTOEVIRGULA		{ $$ = strdup(";\n"); }
+				  ;
+var_vet_atr				: ABRECHAVE var_vet_dentro FECHACHAVE		{
+																		char aux[100];
+																		strcpy(aux, "{");
+																		strcat(aux, $2);
+																		strcat(aux, "}");
+																		$$ = strdup(aux);
+																	}
+				  ;
+var_vet_dentro			: var_vet_atr VIRGULA var_vet_atr		{
+																	char aux[100];
+																	strcpy(aux, $1);
+																	strcat(aux, ", ");
+																	strcat(aux, $3);
+																	$$ = strdup(aux);
+																}
+				| conteudo_vetor
+				  ;
+conteudo_vetor			: numint vetor_int		{
+													char aux[100];
+													strcpy(aux, $1);
+													strcat(aux, $2);
+													$$ = strdup(aux);
+												}
+				| numreal vetor_real		{
+												char aux[100];
+												strcpy(aux, $1);
+												strcat(aux, $2);
+												$$ = strdup(aux);
+											}
+				| string vetor_string		{
+												char aux[100];
+												strcpy(aux, $1);
+												strcat(aux, $2);
+												$$ = strdup(aux);
+											}
+				| caractere vetor_caractere		{
+													char aux[100];
+													strcpy(aux, $1);
+													strcat(aux, $2);
+													$$ = strdup(aux);
+												}
+				  ;
+vetor_int				: VIRGULA numint vetor_int		{
+															char aux[100];
+															strcpy(aux, ", ");
+															strcat(aux, $2);
+															strcat(aux, $3);
+															$$ = strdup(aux);
+														}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+vetor_real				: VIRGULA numreal vetor_real		{
+																char aux[100];
+																strcpy(aux, ", ");
+																strcat(aux, $2);
+																strcat(aux, $3);
+																$$ = strdup(aux);
+															}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+vetor_string			: VIRGULA string vetor_string		{
+																char aux[100];
+																strcpy(aux, ", ");
+																strcat(aux, $2);
+																strcat(aux, $3);
+																$$ = strdup(aux);
+															}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+vetor_caractere			: VIRGULA caractere vetor_caractere		{
+																	char aux[100];
+																	strcpy(aux, ", ");
+																	strcat(aux, $2);
+																	strcat(aux, $3);
+																	$$ = strdup(aux);
+																}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+tipo_especificador 		: INTEIRO		{ $$ = "int "; }
+				| REAL		{ $$ = "float "; }
+				| SEMRETORNO		{ $$ = "void "; }
+				| LOGICO		{ $$ = "bool "; }
+				  ;
+id						: ID	{ $$ = strdup(yytext); }
+				  ;
+numint					: NUMINT		{ $$ = strdup(yytext); }
+				  ;
+numreal					: NUMREAL		{ $$ = strdup(yytext); }
+				  ;
+string					: STRING		{ $$ = strdup(yytext); }
+				  ;
+caractere				: CARACTERE		{ $$ = strdup(yytext); }
+				  ;
+fun_declaracao 			: tipo_especificador id ABREPARENTESE params FECHAPARENTESE composto_decl	
+															{
+																char aux[5000];
+																strcpy(aux, $1);
+																strcat(aux, $2);
+																strcat(aux, " (");
+																strcat(aux, $4);
+																strcat(aux, ")");
+																strcat(aux, $6);
+																$$ = strdup(aux);
+															}
+				| tipo_especificador PRINCIPAL ABREPARENTESE params FECHAPARENTESE composto_decl
+															{
+																char aux[5000];
+																strcpy(aux, $1);
+																strcat(aux, " main (");
+																strcat(aux, $4);
+																strcat(aux, ")");
+																strcat(aux, $6);
+																$$ = strdup(aux);
+															}
+			  	  ;
+params 				: param_lista
+				| /*vazio*/			{ $$ = strdup(""); }
+	  			  ;
+param_lista 			: param param_lista_fat		{
+														char aux[100];
+														strcpy(aux, $1);
+														strcat(aux, $2);
+														$$ = strdup(aux);
+													}
+			     	  ;
+param_lista_fat 		: VIRGULA param_lista		{ 
+														char aux[100];
+														strcpy(aux, ", ");
+														strcat(aux, $2);
+														$$ = strdup(aux);
+													}
+				| /*vazio*/			{ $$ = strdup(""); }
+				  ;
+param 				: tipo_especificador id			{
+														char aux[100];
+														strcpy(aux, $1);
+														strcat(aux, $2);
+														$$ = strdup(aux);
+													}
+				| TEXTO id		{
+									char aux[100];
+									strcpy(aux, "char *");
+									strcat(aux, $2);
+									$$ = strdup(aux);
+								}
+	  			  ;
+composto_decl 			: ABRECHAVE dentro_funcao FECHACHAVE		{
+																		char aux[100];
+																		strcpy(aux, "{ \n");
+																		strcat(aux, $2);
+																		strcat(aux, "}\n");
+																		$$ = strdup(aux);
+																	}
+				  ;
+dentro_funcao			: var_declaracao dentro_funcao		{
+																char aux[1000];
+																strcpy(aux, $1);
+																strcat(aux, $2);
+																$$ = strdup(aux);
+															}
+				| comando dentro_funcao		{
+												char aux[5000];
+												strcpy(aux, $1);
+												strcat(aux, $2);
+												$$ = strdup(aux);
+											}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+comando 			: expressao_decl
+				| composto_decl
+				| selecao_decl
+				| iteracao_decl
+				| para_decl
+				| facaenq_decl
+				| escolha_decl
+				| leia_decl
+				| escreva_decl
+				| retorno_decl
+				| interrompa_decl
+				  ;
+expressao_decl 			: expressao PONTOEVIRGULA		{
+																char aux[1000];
+																strcpy(aux, $1);
+																strcat(aux, ";\n");
+																$$ = strdup(aux);
+														}
+				| PONTOEVIRGULA		{ $$ = strdup(";\n"); }
+			   	  ;
+selecao_decl 			: SE ABREPARENTESE expressao FECHAPARENTESE comando %prec LOWER_THAN_SENAO 	
+																{
+																	char aux[1000];
+																	strcpy(aux, "if (");
+																	strcat(aux, $3);
+																	strcat(aux, ")");
+																	strcat(aux, $5);
+																	$$ = strdup(aux);
+																}
+				| SE ABREPARENTESE expressao FECHAPARENTESE comando SENAO comando
+																{
+																	char aux[1000];
+																	strcpy(aux, "if (");
+																	strcat(aux, $3);
+																	strcat(aux, ")");
+																	strcat(aux, $5);
+																	strcat(aux, "else ");
+																	strcat(aux, $7);
+																	$$ = strdup(aux);
+																}
+			 	  ;
+iteracao_decl 			: ENQUANTO ABREPARENTESE expressao FECHAPARENTESE comando
+																{
+																	char aux[1500];
+																	strcpy(aux, "while (");
+																	strcat(aux, $3);
+																	strcat(aux, ")");
+																	strcat(aux, $5);
+																	$$ = strdup(aux);
+																}
+			  	  ;
 
-program:
-	     ABRECHAVE {fprintf(yyout,"%s",yytext);}
-		| FECHACHAVE {fprintf(yyout,"%s",yytext);}
-		| ABRECOLCHETE {fprintf(yyout,"%s",yytext);}
-		| FECHACOLCHETE {fprintf(yyout,"%s",yytext);}
-		| ABREPARENTESE {fprintf(yyout,"%s",yytext);}
-		| FECHAPARENTESE {fprintf(yyout,"%s",yytext);}
-		| PORCENTAGEM {fprintf(yyout,"%s",yytext);}
-		| CONTRABARRA {fprintf(yyout,"%s",yytext);}
-		| ASPAS {fprintf(yyout,"%s",yytext);}
-		| UNDERLINE {fprintf(yyout,"%s",yytext);}
-		| PONTO {fprintf(yyout,"%s",yytext);}
-		| DOISPONTOS {fprintf(yyout,"%s",yytext);}
-		| ASPASIMPLES {fprintf(yyout,"%s",yytext);}
-		| CIFRAO {fprintf(yyout,"$");}
-		| ECOMERCIAL {fprintf(yyout,"%s",yytext);}
-		| INTERROGACAO {fprintf(yyout,"%s",yytext);}
-		| EXCLAMACAO {fprintf(yyout,"%s",yytext);}
-        | STRING {fprintf(yyout,"%s",yytext);}
-        //| string
-        | RAIZQUADRADA {fprintf(yyout," sqrt");}
-		| CONCATENA {fprintf(yyout," strcat");}
-		| POTENCIA {fprintf(yyout," pow");}
-		| MAIUSCULA {fprintf(yyout," toupper");}
-		| E {fprintf(yyout," && ");}
-		| OU {fprintf(yyout," || ");}
-		| SOMASUB {fprintf(yyout,"%s",yytext);}
-		//| somasub
-		| NUMINT {fprintf(yyout,"%s",yytext);}
-		//| numint
-		| NUMREAL {fprintf(yyout," %s ",yytext);}
-		| se
-        | SE {fprintf(yyout," if ");}
-        | SENAO {fprintf(yyout,"else ");}
-		| FACA {fprintf(yyout,"do");}
-		| ENQUANTO {fprintf(yyout,"while");}
-        | para
-        | PARA {fprintf(yyout,"for");}
-		| RETORNE {fprintf(yyout,"return ");}
-		| int
-        //| INTEIRO {fprintf(yyout," int ");}
-		| REAL {fprintf(yyout," float ");}
-		| TEXTO {fprintf(yyout," char ");}
-        | textostring
-		| LOGICO {fprintf(yyout," bool ");}
-		| VERDADEIRO {fprintf(yyout," true ");}
-		| FALSO {fprintf(yyout," false ");}
-		| SEMRETORNO {fprintf(yyout," void ");}
-		| ESCOLHA {fprintf(yyout," switch ");}
-		| caso
-        | CASO {fprintf(yyout," case ");}
-        | PADRAO {fprintf(yyout," default ");}
-		| INTERROMPA {fprintf(yyout," break ");}
-		| PRINCIPAL {fprintf(yyout," main ");}
-		| LEIA {fprintf(yyout," scanf ");}
-		| leia
-        | printf
-        | ESCREVA {fprintf(yyout," printf ");}
-        | PORREAL {fprintf(yyout," %%f");}
-		| PORTEXTO {fprintf(yyout," %%s");}
-		| PORINTEIRO {fprintf(yyout," %%d");}
-        | ID {
-                if(strcmp(yytext,"itens")==0) fprintf(yyout,"*%s ",yytext);
-                else 
-                fprintf(yyout,"%s",yytext);}
-		//| id
-		| MULTDIV {fprintf(yyout," %s",yytext);}
-		| RELACIONAL {fprintf(yyout," %s ",yytext);}
-        | relacional
-		| ATRIBUICAO {fprintf(yyout,"%s",yytext);}
-		| COMENTARIO {fprintf(yyout,"%s",yytext);}
-		| VIRGULA {fprintf(yyout," %s ",yytext);}
-		| PONTOEVIRGULA {fprintf(yyout,"%s",yytext);}
-		;
+para_decl				: PARA ABREPARENTESE id ATRIBUICAO expressao PONTOEVIRGULA expressao PONTOEVIRGULA expressao_unaria FECHAPARENTESE comando
+																{
+																	char aux[1000];
+																	char operacao[20];
+																	char passo[20];
+																	int temp = atoi($9);
+																	if(temp >= 0){
+																		strcpy(operacao, $3);
+																		strcat(operacao, "<= ");
+																		strcat(operacao, $7);
+																		strcpy(passo, $3);
+																		strcat(passo, "=");
+																		strcat(passo, $3);
+																		strcat(passo, "+ ");
+																		strcat(passo, $9);
+																	} else {
+																		strcpy(operacao, $3);
+																		strcat(operacao, ">= ");
+																		strcat(operacao, $7);
+																		strcpy(passo, $3);
+																		strcat(passo, "=");
+																		strcat(passo, $3);
+																		strcat(passo, $9);
+																	}
+																	strcpy(aux, "for (");
+																	strcat(aux, $3);
+																	strcat(aux, " = ");
+																	strcat(aux, $5);
+																	strcat(aux, "; ");
+																	strcat(aux, operacao);
+																	strcat(aux, "; ");
+																	strcat(aux, passo);
+																	strcat(aux, ") ");
+																	strcat(aux, $11);
+																	$$ = strdup(aux);
+																}
+				  ;
+facaenq_decl			: FACA comando ENQUANTO ABREPARENTESE expressao FECHAPARENTESE PONTOEVIRGULA
+																{
+																	char aux[1500];
+																	strcpy(aux, "do");
+																	strcat(aux, $2);
+																	strcat(aux, "while (");
+																	strcat(aux, $5);
+																	strcat(aux, ");\n");
+																	$$ = strdup(aux);
+																}
+				  ;
+escolha_decl			: ESCOLHA ABREPARENTESE var FECHAPARENTESE ABRECHAVE escolhas_dentro padrao_opc FECHACHAVE
+																{
+																	char aux[1000];
+																	strcpy(aux, "switch (");
+																	strcat(aux, $3);
+																	strcat(aux, ") {\n");
+																	strcat(aux, $6);
+																	strcat(aux, $7);
+																	strcat(aux, "}\n");
+																	int i;
+																	for(i = 0; i<current_tab_tipo ; i++){
+																		if(strstr($3, tabela[i].nome) != NULL){
+																			if(strcmp(tabela[i].tipo, "char ") == 0){
+																				tabela[i].flag_char = 1;
+																			}
+																		}
+																	}
+																	$$ = strdup(aux);
+																}
+				  ;
+leia_decl				: LEIA ABREPARENTESE string VIRGULA var FECHAPARENTESE PONTOEVIRGULA
+																{
+																	char *result;
+																	char aux[400];
+																	if(strstr($3, "%texto") != NULL){
+																		strcpy(aux, "gets(");
+																		strcat(aux, $5);
+																		strcat(aux, ");\n");
+																	} else {
+																		result = repl_str($3,"%inteiro","%d");
+																		result = repl_str(result,"%real","%f");
+																		strcpy(aux, "scanf(");
+																		strcat(aux, result);
+																		strcat(aux, ", &");
+																		strcat(aux, $5);
+																		strcat(aux, ");\n");
+																	}
+																	free(result);
+																	$$ = strdup(aux);
+																}
+				  ;
+escreva_decl			: ESCREVA ABREPARENTESE string escreva_fator FECHAPARENTESE PONTOEVIRGULA
+																{
+																	char *result;
+																	char aux[400];
+																	result = repl_str($3,"%inteiro","%d");
+																	result = repl_str(result,"%real","%f");
+																	result = repl_str(result,"%texto","%s");
+																	result = repl_str(result,"%.5real","%.5f");
+																	strcpy(aux, "printf (");
+																	strcat(aux, result);
+																	strcat(aux, $4);
+																	strcat(aux, ");\n");
+																	free(result);
+																	$$ = strdup(aux);
+																}
+				  ;
+maiuscula_decl			: MAIUSCULA ABREPARENTESE char_fator FECHAPARENTESE
+																{
+																	char aux[200];
+																	strcpy(aux, "toupper (");
+																	strcat(aux, $3);
+																	strcat(aux, ")");
+																	$$ = strdup(aux);
+																}
+				  ;
+concatena_decl			: CONCATENA ABREPARENTESE concatena_fator VIRGULA concatena_fator FECHAPARENTESE
+																{
+																	char aux[200];
+																	strcpy(aux, "strcat(");
+																	strcat(aux, $3);
+																	strcat(aux, ", ");
+																	strcat(aux, $5);
+																	strcat(aux, ")");
+																	$$ = strdup(aux);
+																}
+				  ;
+interrompa_decl			: INTERROMPA PONTOEVIRGULA		{ $$ = strdup("break;\n"); }
+				  ;
+concatena_fator			: string
+				| var
+				  ;
+retorno_decl 			: RETORNE PONTOEVIRGULA		{ $$ = strdup("return;\n"); }
+				| RETORNE expressao PONTOEVIRGULA		{
+															char aux[50];
+															strcpy(aux, "return ");
+															strcat(aux, $2);
+															strcat(aux, ";\n");
+															$$ = strdup(aux);
+														}
+				  ;
+escreva_fator			: VIRGULA expressao escreva_fator		{
+																	char aux[100];
+																	strcpy(aux, ", ");
+																	strcat(aux, $2);
+																	strcat(aux, $3);
+																	$$ = strdup(aux);
+																}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+char_fator				: var
+				| caractere
+				  ;
+escolhas_dentro			: CASO escolha_simples escolhas_dentro_mais DOISPONTOS comando_caso escolhas_dentro
+																{
+																	char aux[400];
+																	strcpy(aux, "case ");
+																	strcat(aux, $2);
+																	strcat(aux, $3);
+																	strcat(aux, ":\n");
+																	strcat(aux, $5);
+																	strcat(aux, "break;\n");
+																	strcat(aux, $6);
+																	$$ = strdup(aux);
+																}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+escolhas_dentro_mais	: VIRGULA escolha_simples escolhas_dentro_mais
+																{
+																	char aux[100];
+																	strcpy(aux, ":\ncase ");
+																	strcat(aux, $2);
+																	strcat(aux, $3);
+																	$$ = strdup(aux);
+																}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+comando_caso			:  /*vazio*/		{ $$ = strdup(""); }
+				| comando
+				  ;
+padrao_opc				: PADRAO DOISPONTOS comando			{
+																char aux[400];
+																strcpy(aux, "default :\n");
+																strcat(aux, $3);
+																$$ = strdup(aux);
+															}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+expressao 			: var ATRIBUICAO expressao		{ 
+														char aux[200];
+														strcpy(aux, $1);
+														strcat(aux, " = ");
+														strcat(aux, $3);
+														$$ = strdup(aux);
+													}
+				| expressao_logica
+		 		  ;
+var 				: id var_fat		{
+											char aux[50];
+											strcpy(aux, $1);
+											strcat(aux, $2);
+											$$ = strdup(aux);
+										}
+				  ;
+var_fat 			: ABRECOLCHETE expressao FECHACOLCHETE var_fat		{
+																			char aux[100];
+																			strcpy(aux, "[");
+																			strcat(aux, $2);
+																			strcat(aux, "]");
+																			strcat(aux, $4);
+																			$$ = strdup(aux);
+																		}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+expressao_logica		: OU termo_logico expressao_logica_fat		{
+																		char aux[100];
+																		strcpy(aux, "||");
+																		strcat(aux, $2);
+																		strcat(aux, $3);
+																		$$ = strdup(aux);
+																	}
+				| termo_logico expressao_logica_fat		{
+															char aux[100];
+															strcpy(aux, $1);
+															strcat(aux, $2);
+															$$ = strdup(aux);
+														}
+				  ;
+expressao_logica_fat	: OU termo_logico expressao_logica_fat		{
+																		char aux[100];
+																		strcpy(aux, "||");
+																		strcat(aux, $2);
+																		strcat(aux, $3);
+																		$$ = strdup(aux);
+																	}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+termo_logico			: expressao_simples termo_logico_fat		{
+																		char aux[100];
+																		strcpy(aux, $1);
+																		int i;
+																		for(i = 0; i<current_tab_tipo ; i++){
+																			if(strstr($1, tabela[i].nome) != NULL){
+																				if(strstr($1, "\'") != NULL){
+																					tabela[i].flag_char = 1;
+																				}
+																			}
+																		}
+																		strcat(aux, $2);
+																		$$ = strdup(aux);
+																	}
+				  ;
+termo_logico_fat			: E expressao_simples termo_logico_fat		{
+																			char aux[100];
+																			strcpy(aux, "&&");
+																			strcat(aux, $2);
+																			strcat(aux, $3);
+																			$$ = strdup(aux);
+																		}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+				  
+expressao_simples 		: expressao_soma expressao_simples_fat		{
+																		char aux[100];
+																		strcpy(aux, $1);
+																		strcat(aux, $2);
+																		$$ = strdup(aux);
+																	}
+				| EXCLAMACAO expressao_soma expressao_simples_fat		{
+																			char aux[100];
+																			strcpy(aux, "!");
+																			strcat(aux, $2);
+																			strcat(aux, $3);
+																			$$ = strdup(aux);
+																		}
+				| VERDADEIRO	{ $$ = strdup("true"); }
+				| FALSO		{ $$ = strdup("false"); }
+				  ;
+relacional				: RELACIONAL		{ $$ = strdup(yytext); }
+				  ;
+expressao_simples_fat	 	: relacional expressao_soma		{
+																char aux[100];
+																strcpy(aux, $1);
+																strcat(aux, $2);
+																$$ = strdup(aux);
+															}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+somasub					: SOMASUB	{ $$ = strdup(yytext); }
+				  ;
+expressao_soma			: somasub termo expressao_soma_fat		{
+																	char aux[100];
+																	strcpy(aux, $1);
+																	strcat(aux, $2);
+																	$$ = strdup(aux);
+																}
+				| termo expressao_soma_fat		{
+													char aux[100];
+													strcpy(aux, $1);
+													strcat(aux, $2);
+													$$ = strdup(aux);
+												}
+				  ;
+expressao_soma_fat		: somasub termo expressao_soma_fat		{
+																	char aux[100];
+																	strcpy(aux, $1);
+																	strcat(aux, $2);
+																	strcat(aux, $3);
+																	$$ = strdup(aux);
+																}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
+termo 				: fator termo_fat		{
+												char aux[100];
+												strcpy(aux, $1);
+												strcat(aux, $2);
+												$$ = strdup(aux);
+											}
+	  			  ;
+multdiv				: MULTDIV		{ $$ = strdup(yytext); }
+				  ;
+termo_fat 			: multdiv fator termo_fat		{
+														char aux[100];
+														strcpy(aux, $1);
+														strcat(aux, $2);
+														$$ = strdup(aux);
+													}
+				| /*vazio*/		{ $$ = strdup(""); }
+		  		  ;
 
-id:
-        ID { 
-        
-            $$ = strdup(yytext);}
-			
-		;
-somasub:
-		SOMASUB {$$ = strdup(yytext);}
-			
-		;
-
-numint:
-		NUMINT {$$ = strdup(yytext);
-		}
-		;
-        
-string:
-		STRING {$$ = strdup(yytext);}
-			
-		;
-expr:   
-        
-         id 
-        | numint
-        ;
-
-parenteses:
-    ABREPARENTESE
-    | FECHAPARENTESE
-        ;
-
-relacional:
-        RELACIONAL {$$ = strdup(yytext);}
-        ;
-
-int:
-        INTEIRO id PONTOEVIRGULA {
-            fprintf(yyout,"int %s;",$2);
-        }
-        
-        | INTEIRO id ATRIBUICAO expr PONTOEVIRGULA {
-            fprintf(yyout,"int %s = %s;",$2,$4);
-        }
-        
-        
-        | INTEIRO id ABREPARENTESE INTEIRO id VIRGULA INTEIRO id FECHAPARENTESE { 
-            fprintf(yyout,"int %s (int %s[], int %s)",$2,$5,$8);
-        }
-        
-         | INTEIRO id ABREPARENTESE INTEIRO id FECHAPARENTESE { 
-            fprintf(yyout,"int %s (int %s)",$2,$5);
-        }
-        
-        | INTEIRO id ATRIBUICAO expr VIRGULA id ATRIBUICAO expr PONTOEVIRGULA{
-            fprintf(yyout,"int %s = %s, %s = %s;",$2,$4,$6,$8);
-        }
-        
-        
-        | INTEIRO id ATRIBUICAO expr VIRGULA id ATRIBUICAO expr VIRGULA id VIRGULA id ATRIBUICAO expr PONTOEVIRGULA {
-            fprintf(yyout,"int %s = %s, %s = %s, %s, %s = %s;",$2,$4,$6,$8,$10,$12,$14);
-        }
-        
-        
-         | INTEIRO id ABRECOLCHETE expr FECHACOLCHETE VIRGULA id VIRGULA id VIRGULA id PONTOEVIRGULA {
-            fprintf(yyout,"int %s[%s], %s, %s, %s;",$2,$4,$7,$9,$11);
-        }
-        
-         | INTEIRO id ABRECOLCHETE expr FECHACOLCHETE ATRIBUICAO {fprintf(yyout,"int %s[%s] = ", $2,$4);}
-         
-         | INTEIRO id ABRECOLCHETE expr FECHACOLCHETE VIRGULA id ABRECOLCHETE expr FECHACOLCHETE VIRGULA id ABRECOLCHETE expr FECHACOLCHETE PONTOEVIRGULA 
-                {fprintf(yyout,"int %s[%s], %s[%s], %s[%s]; ",$2,$4,$7,$9,$12,$14);}
-         
-         | INTEIRO id ABRECOLCHETE expr FECHACOLCHETE ABRECOLCHETE expr FECHACOLCHETE ATRIBUICAO {fprintf(yyout,"int %s[%s][%s] = ",$2,$4,$7);}
-         
-         | INTEIRO id ATRIBUICAO expr VIRGULA id VIRGULA {fprintf(yyout,"int %s = %s, %s, ", $2,$4,$6);}
-         
-         | INTEIRO id VIRGULA {fprintf(yyout,"int %s,",$2);}
-         
-         | INTEIRO {fprintf(yyout,"int ");}
-        
-        ;
-        
-para:	
-        PARA parenteses id ATRIBUICAO expr PONTOEVIRGULA expr PONTOEVIRGULA expr parenteses {
-			if(strcmp($7,"itens")==0) fprintf(yyout,"for(%s = %s; %s < *%s; %s++)",$3,$5,$3,$7,$3);
-            else {
-                int temp = atoi($9);
-			    if(temp >= 0 ) 
-				    fprintf(yyout,"for(%s = %s; %s <= %s; %s++)",$3,$5,$3,$7,$3);	
-			    else 
-				    fprintf(yyout,"for(%s = %s; %s >= %s; %s--)",$3,$5,$3,$7,$3);
-			    }
-           }
-         
-        | PARA parenteses id ATRIBUICAO expr expr PONTOEVIRGULA expr PONTOEVIRGULA expr parenteses {
-			int temp = atoi($10);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s%s; %s <= %s; %s++)",$3,$5,$6,$3,$8,$3);	
-			else 
-				fprintf(yyout,"for(%s = %s%s; %s >= %s; %s--)",$3,$5,$6,$3,$8,$3);
-			}
-        
-        | PARA parenteses id ATRIBUICAO expr PONTOEVIRGULA id somasub expr PONTOEVIRGULA expr parenteses {
-            int temp = atoi($11);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s%s%s; %s++)",$3,$5,$3,$7,$8,$9,$3);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s%s%s; %s--)",$3,$5,$3,$7,$8,$9,$3);
-			}
-         
-         | PARA parenteses id ATRIBUICAO expr PONTOEVIRGULA id expr PONTOEVIRGULA expr parenteses {
-            int temp = atoi($10);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s; %s <= %s%s; %s++)",$3,$5,$3,$7,$8,$3);	
-			else 
-				fprintf(yyout,"for(%s = %s; %s >= %s%s; %s--)",$3,$5,$3,$7,$8,$3);
-			}
-         
-         | PARA parenteses id ATRIBUICAO id somasub id numint PONTOEVIRGULA expr PONTOEVIRGULA expr parenteses {
-            int temp = atoi($13);
-			if(temp >= 0 ) 
-				fprintf(yyout,"for(%s = %s%s%s%s; %s <= %s; %s++)",$3,$5,$6,$7,$8,$3,$10,$3);	
-			else 
-				fprintf(yyout,"for(%s = %s%s%s%s; %s >= %s; %s--)",$3,$5,$6,$7,$8,$3,$10,$3);
-			}
-         
-                 
-        ;
-		
-
-textostring:
-        TEXTO id PONTOEVIRGULA {
-            if(strcmp($2,"espaco") == 0) fprintf(yyout,"char *%s;",$2);
-            else if(strcmp($2,"operacao") == 0) fprintf(yyout,"char %s;",$2);
-            else fprintf(yyout,"char %s[100];",$2);
-            }
-        | TEXTO id VIRGULA id PONTOEVIRGULA {fprintf(yyout,"char %s[100], %s[100];",$2, $4);}
-        
-        | TEXTO id ABRECOLCHETE expr FECHACOLCHETE ABRECOLCHETE expr FECHACOLCHETE PONTOEVIRGULA {
-            fprintf(yyout,"char %s[%s][%s];",$2,$4,$7);}
-        
-        | TEXTO id  ABRECOLCHETE expr FECHACOLCHETE PONTOEVIRGULA {fprintf(yyout,"char %s[%s];",$2,$4);}
-        
-        | TEXTO id VIRGULA REAL id VIRGULA INTEIRO id {
-            fprintf(yyout,"char %s[], float %s[], int *%s",$2,$5,$8);}
-        
-        ;
-
-
-leia:
-
-		LEIA ABREPARENTESE string VIRGULA id FECHAPARENTESE PONTOEVIRGULA {
-            char *result; 
-            result = repl_str($3,"%inteiro","%d");
-            result = repl_str(result,"%real","%f");
-            result = repl_str(result,"%texto"," %s");
-            fprintf(yyout,"scanf(%s,&%s);",result,$5);
-            free (result);
-            }
-            
-		| LEIA ABREPARENTESE string VIRGULA id ABRECOLCHETE id FECHACOLCHETE ABRECOLCHETE id FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-                char *result; 
-                result = repl_str($3,"%inteiro","%d");
-                result = repl_str(result,"%real","%f");
-                result = repl_str(result,"%texto"," %c");
-                fprintf(yyout,"scanf(%s,&%s[%s][%s]);",result,$5,$7,$10);
-                free (result);
-           } 
-           
-        | LEIA ABREPARENTESE string VIRGULA id ABRECOLCHETE id FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-            if(strcmp($7,"itens")==0){
-                char *result; 
-                result = repl_str($3,"%inteiro","%d");
-                result = repl_str(result,"%real","%f");
-                result = repl_str(result,"%texto"," %s");
-                fprintf(yyout,"scanf(%s,&%s[*%s]);",result,$5,$7);
-                free (result);
-            } else {
-                char *result; 
-                result = repl_str($3,"%inteiro","%d");
-                result = repl_str(result,"%real","%f");
-                result = repl_str(result,"%texto"," %s");
-                fprintf(yyout,"scanf(%s,&%s[%s]);",result,$5,$7);
-                free (result);
-            } 
-        }            
-            
-		| LEIA ABREPARENTESE string VIRGULA id VIRGULA id FECHAPARENTESE PONTOEVIRGULA {
-            char *result; 
-            result = repl_str($3,"%inteiro","%d");
-            result = repl_str(result,"%real","%f");
-            result = repl_str(result,"%texto"," %s");
-            fprintf(yyout,"scanf(%s, &%s, &%s);",result,$5,$7);
-            free (result);
-           } 
-            
-        ;
-        
-printf:
-        escreva {fprintf(yyout,"%s",$1);};
-        ;
-        
-escreva:
-        ESCREVA ABREPARENTESE string {
-            
-          
-           
-           char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-            char aux[100] = "printf(";
-            strcat(aux,result);
-            free (result);
-            $$ = aux;
-     
-            
-          }
-          
-          | ESCREVA ABREPARENTESE string FECHAPARENTESE PONTOEVIRGULA{
-            
-           
-           char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-            char aux[100] = "printf(";
-            strcat(aux,result);
-            free (result);
-            strcat(aux,");");
-            $$ = aux;
-     
-             
-          }
-          
-          | ESCREVA ABREPARENTESE string VIRGULA id FECHAPARENTESE PONTOEVIRGULA{
-            
-                 
-           char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-            char aux[100] = "printf(";
-            strcat(aux,result);
-            free (result);
-            strcat(aux,",");
-            strcat(aux,$5);
-            strcat(aux,");");
-            $$ = aux;
-     
-             }
-          
-          | ESCREVA ABREPARENTESE string VIRGULA id expr FECHAPARENTESE PONTOEVIRGULA {
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,",");
-                strcat(aux,$5);
-                strcat(aux,$6);
-                //strcat(aux,$7);
-                strcat(aux,");");
-                $$ = aux;
-        }
-        
-        | ESCREVA ABREPARENTESE string VIRGULA id ABRECOLCHETE expr FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,",");
-                strcat(aux,$5);
-                strcat(aux,"[");
-                strcat(aux,$7);
-                strcat(aux,"]);");
-                $$ = aux;
-        }
-        
-              
-        | ESCREVA ABREPARENTESE string VIRGULA id VIRGULA id ABRECOLCHETE expr FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%c");
-               result = repl_str(result,"%.5real","%.5f");
-               
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,",");
-                strcat(aux,$5);
-                strcat(aux,", ");
-                strcat(aux,$7);
-                strcat(aux,"[");
-                strcat(aux,$9);
-                strcat(aux,"]);");
-                $$ = aux;
-        }
-        
-        
-        | ESCREVA ABREPARENTESE string VIRGULA id ABRECOLCHETE expr FECHACOLCHETE ABRECOLCHETE expr FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%c");
-               result = repl_str(result,"%.5real","%.5f");
-               
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,",");
-                strcat(aux,$5);
-                strcat(aux,"[");
-                strcat(aux,$7);
-                strcat(aux,"][");
-                strcat(aux,$10);
-                strcat(aux,"]);");
-                $$ = aux;
-        }
-        
-         | ESCREVA ABREPARENTESE string VIRGULA id ABRECOLCHETE expr FECHACOLCHETE VIRGULA id ABRECOLCHETE expr FECHACOLCHETE FECHAPARENTESE PONTOEVIRGULA {
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%c");
-               result = repl_str(result,"%.5real","%.5f");
-               
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,",");
-                strcat(aux,$5);
-                strcat(aux,"[");
-                strcat(aux,$7);
-                strcat(aux,"], ");
-                strcat(aux,$10);
-                strcat(aux,"[");
-                strcat(aux,$12);
-                strcat(aux,"] );");
-                $$ = aux;
-        }
-        
-         | ESCREVA ABREPARENTESE string VIRGULA id VIRGULA id FECHAPARENTESE PONTOEVIRGULA {
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%c");
-               result = repl_str(result,"%.5real","%.5f");
-               
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,",");
-                strcat(aux,$5);
-                strcat(aux,", ");
-                strcat(aux,$7);
-                strcat(aux,"); ");
-                $$ = aux;
-        }
-        
-        | ESCREVA ABREPARENTESE string VIRGULA id VIRGULA id VIRGULA id VIRGULA id FECHAPARENTESE PONTOEVIRGULA {
-            
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-            char aux[100] = "printf(";
-            strcat(aux,result);
-            free (result);
-            strcat(aux,", ");
-            strcat(aux,$5);
-            strcat(aux,", ");
-            strcat(aux,$7);
-            strcat(aux,", ");
-            strcat(aux,$9);
-            strcat(aux,", ");
-            strcat(aux,$11);
-            strcat(aux,"); ");
-            $$ = aux;
-     
-             
-          }
-          
-          | ESCREVA ABREPARENTESE string VIRGULA id ABREPARENTESE expr FECHAPARENTESE FECHAPARENTESE PONTOEVIRGULA {
-                    
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,", ");
-                strcat(aux,$5);
-                strcat(aux,"(");
-                strcat(aux,$7);
-                strcat(aux,")); ");
-                $$ = aux;
-          }
-          
-          | ESCREVA ABREPARENTESE string VIRGULA id ABREPARENTESE expr VIRGULA expr FECHAPARENTESE FECHAPARENTESE PONTOEVIRGULA {
-                    
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,", ");
-                strcat(aux,$5);
-                strcat(aux,"(");
-                strcat(aux,$7);
-                strcat(aux,",");
-                strcat(aux,$9);
-                strcat(aux,")); ");
-                $$ = aux;
-          }
-          
-           | ESCREVA ABREPARENTESE string VIRGULA id VIRGULA id ABREPARENTESE expr FECHAPARENTESE FECHAPARENTESE PONTOEVIRGULA {
-                    
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,", ");
-                strcat(aux,$5);
-                strcat(aux,", ");
-                strcat(aux,$7);
-                strcat(aux,"(");
-                strcat(aux,$9);
-                strcat(aux,")); ");
-                $$ = aux;
-          }
-          
-          | ESCREVA ABREPARENTESE string VIRGULA CONCATENA ABREPARENTESE expr VIRGULA expr FECHAPARENTESE FECHAPARENTESE PONTOEVIRGULA {
-                    
-               char *result; 
-               result = repl_str($3,"%inteiro","%d");
-               result = repl_str(result,"%real","%f");
-               result = repl_str(result,"%texto","%s");
-               result = repl_str(result,"%.5real","%.5f");
-               
-           
-                char aux[100] = "printf(";
-                strcat(aux,result);
-                free (result);
-                strcat(aux,", strcat(");
-                strcat(aux,$7);
-                strcat(aux,",");
-                strcat(aux,$9);
-                strcat(aux,")); ");
-                $$ = aux;
-          }
-        ;
-        
-se:
-         SE parenteses id parenteses { fprintf(yyout,"if (%s)",$3);}
-         | SE parenteses EXCLAMACAO id parenteses { fprintf(yyout,"if (!%s)",$4);}
-         | SE parenteses id relacional numint parenteses { 
-                if(strcmp($3,"itens")==0) fprintf(yyout,"if (*%s %s %s)",$3,$4,$5);
-                else fprintf(yyout,"if (%s %s %s)",$3,$4,$5);}
-         | SE parenteses id relacional id parenteses { 
-            if (strcmp($4,"==") == 0 && strcmp($3,"tex1") == 0 && strcmp($5,"tex2") == 0) fprintf(yyout,"if (strcmp(%s,%s) == 0)",$3,$5);
-            else fprintf(yyout,"if (%s %s %s)",$3,$4,$5);
-            }
-         | SE parenteses parenteses id ABRECOLCHETE id FECHACOLCHETE PORCENTAGEM numint parenteses relacional expr parenteses{ 
-                fprintf(yyout,"if ((%s[%s] %% %s) %s %s)",$4,$6,$9,$11,$12);}
-         | SE parenteses MAIUSCULA parenteses id parenteses relacional ASPASIMPLES id ASPASIMPLES parenteses {
-                fprintf(yyout,"if (strcmp(toupper(%s),\"%s\") == 0)",$5,$9);}
-         | SE parenteses id relacional parenteses id ABRECOLCHETE expr FECHACOLCHETE somasub ASPASIMPLES numint ASPASIMPLES parenteses parenteses{
-                fprintf(yyout,"if (%s %s (%s[%s]%s'%s'))",$3,$4,$6,$8,$10,$12);}
-         | SE parenteses id relacional string OU id relacional string OU id relacional string OU id relacional string parenteses{
-                fprintf(yyout,"if (strcmp(%s,%s)==0 || strcmp(%s,%s)==0 || strcmp(%s,%s)==0 || strcmp(%s,%s)==0)",$3,$5,$7,$9,$11,$13,$15,$17);}
-         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id ABRECOLCHETE id expr FECHACOLCHETE parenteses{
-                fprintf(yyout,"if (%s[%s] %s %s[%s%s])",$3,$5,$7,$8,$10,$11);}
-         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id parenteses {
-                fprintf(yyout,"if (%s[%s] %s %s)",$3,$5,$7,$8);}
-         | SE parenteses id PORCENTAGEM id ABRECOLCHETE id FECHACOLCHETE relacional expr parenteses {
-                fprintf(yyout,"if (%s %% %s[%s] %s %s)",$3,$5,$7,$9,$10);}
-         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id ABRECOLCHETE id FECHACOLCHETE parenteses {
-                fprintf(yyout," if (%s[%s] %s %s[%s])",$3,$5,$7,$8,$10);}
-         | SE parenteses id ABRECOLCHETE id FECHACOLCHETE relacional id ABRECOLCHETE id somasub id FECHACOLCHETE parenteses {
-                fprintf(yyout,"if (%s[%s] %s %s[%s%s%s])",$3,$5,$7,$8,$10,$11,$12);}
-         | SE parenteses id relacional id ABRECOLCHETE id FECHACOLCHETE parenteses {
-                fprintf(yyout,"if (%s %s %s[%s])",$3,$4,$5,$7);}
-         | SE parenteses id relacional ASPASIMPLES id ASPASIMPLES parenteses {
-                fprintf(yyout,"if (strcmp(%s,\"%s\") != 0)",$3,$6);}
-      
-         
-        ;
-
-caso:
-        CASO parametros comandos {fprintf(yyout,"case %s %s",$2,$3);}
-        | CASO parametros {fprintf(yyout,"case %s",$2);}
-        
-        ;
-
-parametros:
-        numint DOISPONTOS { char aux[10]; strcpy(aux,$1); strcat(aux,": "); $$ = aux;}
-        | ASPASIMPLES somasub ASPASIMPLES DOISPONTOS  { char aux[10] = "'"; strcat(aux,$2); strcat(aux,"': "); $$ = aux;  }
-        | ASPASIMPLES MULTDIV ASPASIMPLES DOISPONTOS  { char aux[10] = "'*': "; $$ = aux; }
-        | numint VIRGULA numint VIRGULA numint DOISPONTOS  {  char aux[10]; strcpy(aux,$1); strcat(aux," ... "); strcat(aux,$5); strcat(aux,":");  $$ = aux; }
-        | numint VIRGULA numint VIRGULA numint VIRGULA numint DOISPONTOS  { char aux[10]; strcpy(aux,$1); strcat(aux," ... "); strcat(aux,$7); strcat(aux,":");  $$ = aux; }
-        
-        ;
-        
-comandos:
-        escreva  { char aux[100]; strcpy(aux,$1); strcat(aux," break; "); $$ = aux; }
-        | id ABREPARENTESE id VIRGULA id VIRGULA id FECHAPARENTESE PONTOEVIRGULA  { 
-        char aux[100]; strcpy(aux,$1); strcat(aux,"("); strcat(aux,$3); strcat(aux,","); strcat(aux,$5); strcat(aux,",&"); strcat(aux,$7); strcat(aux,"); break; "); $$ = aux;   }
-        | id ATRIBUICAO id somasub id PONTOEVIRGULA  { char aux[100]; strcpy(aux,$1); strcat(aux,"="); strcat(aux,$3); strcat(aux,$4); strcat(aux,$5); strcat(aux,"; break; "); $$ = aux;  }
-        | id ATRIBUICAO id MULTDIV id PONTOEVIRGULA  { char aux[100]; strcpy(aux,$1); strcat(aux,"="); strcat(aux,$3); strcat(aux,"*"); strcat(aux,$5); strcat(aux,"; break; "); $$ = aux; }
-        ;
-        
-               
+fator 			: ABREPARENTESE expressao FECHAPARENTESE		{
+																	char aux[100];
+																	strcpy(aux, "(");
+																	strcat(aux, $2);
+																	strcat(aux, ")");
+																	$$ = strdup(aux);
+																}
+				| var
+				| ativacao
+				| numreal
+				| numint
+				| caractere
+				| string
+				| raizq_decl
+				| potencia_decl
+				| tamanhotexto_decl
+				| maiuscula_decl
+				| concatena_decl
+	  			  ;
+expressao_unaria 	: numint
+				| somasub numint		{
+											char aux[30];
+											strcpy(aux, $1);
+											strcat(aux, $2);
+											$$ = strdup(aux);
+										}
+				  ;
+escolha_simples		: expressao_unaria
+				| caractere
+				  ;
+raizq_decl				: RAIZQUADRADA ABREPARENTESE expressao_soma FECHAPARENTESE
+																	{
+																		char aux[150];
+																		strcpy(aux, "sqrt (");
+																		strcat(aux, $3);
+																		strcat(aux, ")");
+																		$$ = strdup(aux);
+																	}
+				  ;
+potencia_decl			: POTENCIA ABREPARENTESE expressao_soma VIRGULA expressao_soma FECHAPARENTESE
+																	{
+																		char aux[100];
+																		strcpy(aux, "pow (");
+																		strcat(aux, $3);
+																		strcat(aux, ", ");
+																		strcat(aux, $5);
+																		strcat(aux, ")");
+																		$$ = strdup(aux);
+																	}
+				  ;
+tamanhotexto_decl		: TAMANHOTEXTO ABREPARENTESE texto_fator FECHAPARENTESE
+																	{
+																		char aux[100];
+																		strcpy(aux, "strlen (");
+																		strcat(aux, $3);
+																		strcat(aux, ")");
+																		$$ = strdup(aux);
+																	}
+				  ;
+texto_fator				: var
+				| string
+				  ;
+ativacao 			: id ABREPARENTESE args FECHAPARENTESE		{
+																	char aux[100];
+																	strcpy(aux, $1);
+																	strcat(aux, "(");
+																	int i;
+																	for(i = 0; i<current_tab_tipo ; i++){
+																		if(strstr($3, tabela[i].nome) != NULL){
+																			if(strstr(tabela[i].vet, "[") != NULL){
+																				tabela[i].flag_param = 1;
+																			}
+																		}
+																	}
+																	strcat(aux, $3);
+																	strcat(aux, ")");
+																	$$ = strdup(aux);
+																}
+		 		  ;
+args 				: arg_lista
+				| /*vazio*/		{ $$ = strdup(""); }
+	 			  ;
+arg_lista 			: expressao args_fat		{
+													char aux[100];
+													strcpy(aux, $1);
+													strcat(aux, $2);
+													$$ = strdup(aux);
+												}
+		  		  ;
+args_fat 			: VIRGULA expressao args_fat		{
+															char aux [100];
+															strcpy(aux, ", ");
+															strcat(aux, $2);
+															strcat(aux, $3);
+															$$ = strdup(aux);
+														}
+				| /*vazio*/		{ $$ = strdup(""); }
+				  ;
 %%
-
-void yyerror(char *s) {
-    fprintf(stderr, "%s\n", s);
+void yyerror (char *s) {
+	fprintf(stderr, "%s\n", s);
 }
 
 int main(int argc, char *argv[]){
@@ -663,5 +915,5 @@ int main(int argc, char *argv[]){
 	fprintf(yyout,"\n");
 	yyin = fopen(argv[1], "r");
 	yyparse();
-    return 0;
+	return 0;
 }

@@ -18,7 +18,7 @@ inteiro principal () {
 
     enquanto (k) {
         escreva ("Digite os (%inteiro) numeros: \n", x);
-        para(i = 0; x; 1){
+        para (i = 0; x; 1) {
             escreva ("Numero [%inteiro] : ", i);
             leia ("%inteiro", Avet[i]);
 			se ((Avet[i] % 2) == 0) {
@@ -42,9 +42,9 @@ inteiro principal () {
             escreva ("%inteiro\n", Cvet[i]);
         }
         escreva ("\n");
-        escreva ("Deseja continuar <S/N> ? \n");
+        escreva ("Deseja continuar <s/n> ? \n");
         leia ("%texto", dc);
-        se (maiuscula (dc) == 'N')
+        se (dc == 'n')
             k = falso;
     }
 }

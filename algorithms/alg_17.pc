@@ -5,7 +5,8 @@ real media (real numero1, real numero2) {
 inteiro principal () {
     real n1, n2;
     escreva ("Digite dois numeros ");
-    leia ("%real %real", n1, n2);
+    leia ("%real", n1);
+	leia ("%real", n2);
     escreva ("Media: %real", media(n1,n2));
 
 }
