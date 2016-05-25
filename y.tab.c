@@ -87,6 +87,7 @@
 		char vet[100];
 		int flag_param;
 		int flag_char;
+		int flag_string;
 	};
 	
 	struct table tabela[300];
@@ -95,7 +96,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 99 "y.tab.c"
+#line 100 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -245,7 +246,7 @@ typedef int YYSTYPE;
 
 
 /* Line 264 of yacc.c  */
-#line 249 "y.tab.c"
+#line 250 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -591,22 +592,22 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    35,    35,    37,    92,   149,   150,   152,   162,   169,
-     186,   195,   204,   206,   212,   214,   225,   233,   241,   247,
-     249,   255,   257,   265,   272,   274,   280,   286,   292,   299,
-     306,   308,   315,   317,   324,   326,   333,   335,   336,   337,
-     338,   340,   342,   344,   346,   348,   350,   361,   372,   373,
-     375,   382,   388,   390,   396,   403,   411,   417,   423,   425,
-     426,   427,   428,   429,   430,   431,   432,   433,   434,   435,
-     437,   443,   445,   454,   466,   477,   514,   525,   545,   566,
-     582,   591,   602,   604,   605,   607,   608,   616,   623,   625,
-     626,   628,   640,   642,   650,   652,   653,   655,   661,   663,
-     670,   672,   679,   687,   689,   696,   703,   710,   712,   727,
-     734,   737,   743,   750,   751,   753,   755,   761,   763,   765,
-     771,   778,   785,   787,   794,   796,   802,   805,   812,   813,
-     814,   815,   816,   817,   818,   819,   820,   821,   822,   824,
-     825,   832,   833,   835,   844,   855,   864,   865,   867,   884,
-     885,   887,   894,   901
+       0,    36,    36,    38,    93,   150,   151,   153,   163,   170,
+     188,   197,   206,   208,   214,   216,   227,   235,   243,   249,
+     251,   257,   259,   267,   274,   276,   282,   288,   294,   301,
+     308,   310,   317,   319,   326,   328,   335,   337,   338,   339,
+     340,   342,   344,   346,   348,   350,   352,   363,   374,   375,
+     377,   384,   390,   392,   398,   405,   413,   419,   425,   427,
+     428,   429,   430,   431,   432,   433,   434,   435,   436,   437,
+     439,   445,   447,   456,   468,   479,   516,   527,   547,   568,
+     584,   593,   604,   606,   607,   609,   610,   618,   625,   627,
+     628,   630,   642,   644,   652,   654,   655,   657,   663,   665,
+     684,   686,   693,   701,   703,   710,   717,   724,   726,   745,
+     752,   755,   779,   786,   787,   789,   791,   797,   799,   801,
+     807,   814,   821,   823,   830,   832,   838,   841,   848,   849,
+     850,   851,   852,   853,   854,   855,   856,   857,   858,   860,
+     861,   868,   869,   871,   880,   891,   900,   901,   903,   920,
+     921,   923,   930,   937
 };
 #endif
 
@@ -1763,14 +1764,14 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 35 "parser.y"
+#line 36 "parser.y"
     { fprintf(yyout,"%s", (yyvsp[(1) - (1)])); }
     break;
 
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 37 "parser.y"
+#line 38 "parser.y"
     { 	
 											char aux[10000];
 											strcpy(aux, (yyvsp[(1) - (1)]));
@@ -1814,7 +1815,7 @@ yyreduce:
 													strcpy(temp_gets, "gets(");
 													strcat(temp_gets, tabela[i].nome);
 													strcat(temp_gets, ")");
-													strcpy(result_gets, "scanf(\" %c\", ");
+													strcpy(result_gets, "scanf(\" %c\", &");
 													strcat(result_gets, tabela[i].nome);
 													strcat(result_gets, ")");
 													
@@ -1831,7 +1832,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 92 "parser.y"
+#line 93 "parser.y"
     {
 														char aux[10000];
 														strcpy(aux, (yyvsp[(1) - (2)]));
@@ -1876,7 +1877,7 @@ yyreduce:
 																strcpy(temp_gets, "gets(");
 																strcat(temp_gets, tabela[i].nome);
 																strcat(temp_gets, ")");
-																strcpy(result_gets, "scanf(\" %c\", ");
+																strcpy(result_gets, "scanf(\" %c\", &");
 																strcat(result_gets, tabela[i].nome);
 																strcat(result_gets, ")");
 																
@@ -1893,7 +1894,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 152 "parser.y"
+#line 153 "parser.y"
     {
 																			char aux[100];
 																			strcpy(aux, (yyvsp[(1) - (2)]));
@@ -1909,7 +1910,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 162 "parser.y"
+#line 163 "parser.y"
     {
 											char aux[100];
 											strcpy(aux, "char ");
@@ -1921,7 +1922,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 169 "parser.y"
+#line 170 "parser.y"
     {
 													char aux[100];
 													strcpy(aux, (yyvsp[(1) - (3)]));
@@ -1930,6 +1931,7 @@ yyreduce:
 													if(strstr((yyvsp[(2) - (3)]), "[") == NULL){
 														strcat(aux, "[50]");
 														strcpy(tabela[current_tab_nome].vet, "[50]");
+														tabela[current_tab_nome].flag_string = 1;
 													}
 													strcpy(tabela[current_tab_tipo].tipo, "char ");
 													strcpy(tabela[current_tab_nome].vet, (yyvsp[(2) - (3)]));
@@ -1943,7 +1945,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 186 "parser.y"
+#line 188 "parser.y"
     {
 																							char aux[200];
 																							strcpy(aux, "[");
@@ -1958,7 +1960,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 195 "parser.y"
+#line 197 "parser.y"
     {
 																			char aux[100];
 																			strcpy(aux, "[");
@@ -1973,14 +1975,14 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 204 "parser.y"
+#line 206 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 206 "parser.y"
+#line 208 "parser.y"
     {
 															char aux[100];
 															strcpy(aux, ", ");
@@ -1992,14 +1994,14 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 212 "parser.y"
+#line 214 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 214 "parser.y"
+#line 216 "parser.y"
     {
 																			char aux[100];
 																			strcpy(aux, (yyvsp[(1) - (3)]));
@@ -2015,7 +2017,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 225 "parser.y"
+#line 227 "parser.y"
     {
 																							char aux[200];
 																							strcpy(aux, "[");
@@ -2029,7 +2031,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 233 "parser.y"
+#line 235 "parser.y"
     {
 																					char aux[100];
 																					strcpy(aux, "[");
@@ -2043,7 +2045,7 @@ yyreduce:
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 241 "parser.y"
+#line 243 "parser.y"
     {
 												char aux[100];
 												strcpy(aux, " = ");
@@ -2055,14 +2057,14 @@ yyreduce:
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 247 "parser.y"
+#line 249 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 249 "parser.y"
+#line 251 "parser.y"
     {
 																char aux[100];
 																strcpy(aux, ", ");
@@ -2074,14 +2076,14 @@ yyreduce:
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 255 "parser.y"
+#line 257 "parser.y"
     { (yyval) = strdup(";\n"); }
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 257 "parser.y"
+#line 259 "parser.y"
     {
 																		char aux[100];
 																		strcpy(aux, "{");
@@ -2094,7 +2096,7 @@ yyreduce:
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 265 "parser.y"
+#line 267 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, (yyvsp[(1) - (3)]));
@@ -2107,7 +2109,7 @@ yyreduce:
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 274 "parser.y"
+#line 276 "parser.y"
     {
 													char aux[100];
 													strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2119,7 +2121,7 @@ yyreduce:
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 280 "parser.y"
+#line 282 "parser.y"
     {
 												char aux[100];
 												strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2131,7 +2133,7 @@ yyreduce:
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 286 "parser.y"
+#line 288 "parser.y"
     {
 												char aux[100];
 												strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2143,7 +2145,7 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 292 "parser.y"
+#line 294 "parser.y"
     {
 													char aux[100];
 													strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2155,7 +2157,7 @@ yyreduce:
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 299 "parser.y"
+#line 301 "parser.y"
     {
 															char aux[100];
 															strcpy(aux, ", ");
@@ -2168,14 +2170,14 @@ yyreduce:
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 306 "parser.y"
+#line 308 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 308 "parser.y"
+#line 310 "parser.y"
     {
 																char aux[100];
 																strcpy(aux, ", ");
@@ -2188,14 +2190,14 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 315 "parser.y"
+#line 317 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 317 "parser.y"
+#line 319 "parser.y"
     {
 																char aux[100];
 																strcpy(aux, ", ");
@@ -2208,14 +2210,14 @@ yyreduce:
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 324 "parser.y"
+#line 326 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 326 "parser.y"
+#line 328 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, ", ");
@@ -2228,77 +2230,77 @@ yyreduce:
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 333 "parser.y"
+#line 335 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 335 "parser.y"
+#line 337 "parser.y"
     { (yyval) = "int "; }
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 336 "parser.y"
+#line 338 "parser.y"
     { (yyval) = "float "; }
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 337 "parser.y"
+#line 339 "parser.y"
     { (yyval) = "void "; }
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 338 "parser.y"
+#line 340 "parser.y"
     { (yyval) = "bool "; }
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 340 "parser.y"
+#line 342 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 342 "parser.y"
+#line 344 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 344 "parser.y"
+#line 346 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 346 "parser.y"
+#line 348 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 348 "parser.y"
+#line 350 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 351 "parser.y"
+#line 353 "parser.y"
     {
 																char aux[5000];
 																strcpy(aux, (yyvsp[(1) - (6)]));
@@ -2314,7 +2316,7 @@ yyreduce:
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 362 "parser.y"
+#line 364 "parser.y"
     {
 																char aux[5000];
 																strcpy(aux, (yyvsp[(1) - (6)]));
@@ -2329,14 +2331,14 @@ yyreduce:
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 373 "parser.y"
+#line 375 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 375 "parser.y"
+#line 377 "parser.y"
     {
 														char aux[100];
 														strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2348,7 +2350,7 @@ yyreduce:
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 382 "parser.y"
+#line 384 "parser.y"
     { 
 														char aux[100];
 														strcpy(aux, ", ");
@@ -2360,14 +2362,14 @@ yyreduce:
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 388 "parser.y"
+#line 390 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 390 "parser.y"
+#line 392 "parser.y"
     {
 														char aux[100];
 														strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2379,7 +2381,7 @@ yyreduce:
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 396 "parser.y"
+#line 398 "parser.y"
     {
 									char aux[100];
 									strcpy(aux, "char *");
@@ -2391,7 +2393,7 @@ yyreduce:
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 403 "parser.y"
+#line 405 "parser.y"
     {
 																		char aux[100];
 																		strcpy(aux, "{ \n");
@@ -2404,7 +2406,7 @@ yyreduce:
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 411 "parser.y"
+#line 413 "parser.y"
     {
 																char aux[1000];
 																strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2416,7 +2418,7 @@ yyreduce:
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 417 "parser.y"
+#line 419 "parser.y"
     {
 												char aux[5000];
 												strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2428,14 +2430,14 @@ yyreduce:
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 423 "parser.y"
+#line 425 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 437 "parser.y"
+#line 439 "parser.y"
     {
 																char aux[1000];
 																strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2447,14 +2449,14 @@ yyreduce:
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 443 "parser.y"
+#line 445 "parser.y"
     { (yyval) = strdup(";\n"); }
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 446 "parser.y"
+#line 448 "parser.y"
     {
 																	char aux[1000];
 																	strcpy(aux, "if (");
@@ -2468,7 +2470,7 @@ yyreduce:
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 455 "parser.y"
+#line 457 "parser.y"
     {
 																	char aux[1000];
 																	strcpy(aux, "if (");
@@ -2484,7 +2486,7 @@ yyreduce:
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 467 "parser.y"
+#line 469 "parser.y"
     {
 																	char aux[1500];
 																	strcpy(aux, "while (");
@@ -2498,7 +2500,7 @@ yyreduce:
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 478 "parser.y"
+#line 480 "parser.y"
     {
 																	char aux[1000];
 																	char operacao[20];
@@ -2539,7 +2541,7 @@ yyreduce:
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 515 "parser.y"
+#line 517 "parser.y"
     {
 																	char aux[1500];
 																	strcpy(aux, "do");
@@ -2554,7 +2556,7 @@ yyreduce:
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 526 "parser.y"
+#line 528 "parser.y"
     {
 																	char aux[1000];
 																	strcpy(aux, "switch (");
@@ -2578,7 +2580,7 @@ yyreduce:
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 546 "parser.y"
+#line 548 "parser.y"
     {
 																	char *result;
 																	char aux[400];
@@ -2603,7 +2605,7 @@ yyreduce:
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 567 "parser.y"
+#line 569 "parser.y"
     {
 																	char *result;
 																	char aux[400];
@@ -2623,7 +2625,7 @@ yyreduce:
   case 80:
 
 /* Line 1455 of yacc.c  */
-#line 583 "parser.y"
+#line 585 "parser.y"
     {
 																	char aux[200];
 																	strcpy(aux, "toupper (");
@@ -2636,7 +2638,7 @@ yyreduce:
   case 81:
 
 /* Line 1455 of yacc.c  */
-#line 592 "parser.y"
+#line 594 "parser.y"
     {
 																	char aux[200];
 																	strcpy(aux, "strcat(");
@@ -2651,21 +2653,21 @@ yyreduce:
   case 82:
 
 /* Line 1455 of yacc.c  */
-#line 602 "parser.y"
+#line 604 "parser.y"
     { (yyval) = strdup("break;\n"); }
     break;
 
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 607 "parser.y"
+#line 609 "parser.y"
     { (yyval) = strdup("return;\n"); }
     break;
 
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 608 "parser.y"
+#line 610 "parser.y"
     {
 															char aux[50];
 															strcpy(aux, "return ");
@@ -2678,7 +2680,7 @@ yyreduce:
   case 87:
 
 /* Line 1455 of yacc.c  */
-#line 616 "parser.y"
+#line 618 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, ", ");
@@ -2691,14 +2693,14 @@ yyreduce:
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 623 "parser.y"
+#line 625 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 91:
 
 /* Line 1455 of yacc.c  */
-#line 629 "parser.y"
+#line 631 "parser.y"
     {
 																	char aux[400];
 																	strcpy(aux, "case ");
@@ -2715,14 +2717,14 @@ yyreduce:
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 640 "parser.y"
+#line 642 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 93:
 
 /* Line 1455 of yacc.c  */
-#line 643 "parser.y"
+#line 645 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, ":\ncase ");
@@ -2735,21 +2737,21 @@ yyreduce:
   case 94:
 
 /* Line 1455 of yacc.c  */
-#line 650 "parser.y"
+#line 652 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 95:
 
 /* Line 1455 of yacc.c  */
-#line 652 "parser.y"
+#line 654 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 97:
 
 /* Line 1455 of yacc.c  */
-#line 655 "parser.y"
+#line 657 "parser.y"
     {
 																char aux[400];
 																strcpy(aux, "default :\n");
@@ -2761,19 +2763,31 @@ yyreduce:
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 661 "parser.y"
+#line 663 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 99:
 
 /* Line 1455 of yacc.c  */
-#line 663 "parser.y"
+#line 665 "parser.y"
     { 
 														char aux[200];
 														strcpy(aux, (yyvsp[(1) - (3)]));
 														strcat(aux, " = ");
 														strcat(aux, (yyvsp[(3) - (3)]));
+														int i;
+														for(i = 0; i<current_tab_tipo ; i++){
+															if(strcmp((yyvsp[(1) - (3)]), tabela[i].nome) == 0){
+																if(tabela[i].flag_string == 1){
+																	strcpy(aux, "strcpy(");
+																	strcat(aux, (yyvsp[(1) - (3)]));
+																	strcat(aux, ", ");
+																	strcat(aux, (yyvsp[(3) - (3)]));
+																	strcat(aux, ")");
+																}
+															}
+														}
 														(yyval) = strdup(aux);
 													}
     break;
@@ -2781,7 +2795,7 @@ yyreduce:
   case 101:
 
 /* Line 1455 of yacc.c  */
-#line 672 "parser.y"
+#line 686 "parser.y"
     {
 											char aux[50];
 											strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2793,7 +2807,7 @@ yyreduce:
   case 102:
 
 /* Line 1455 of yacc.c  */
-#line 679 "parser.y"
+#line 693 "parser.y"
     {
 																			char aux[100];
 																			strcpy(aux, "[");
@@ -2807,36 +2821,11 @@ yyreduce:
   case 103:
 
 /* Line 1455 of yacc.c  */
-#line 687 "parser.y"
+#line 701 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 104:
-
-/* Line 1455 of yacc.c  */
-#line 689 "parser.y"
-    {
-																		char aux[100];
-																		strcpy(aux, "||");
-																		strcat(aux, (yyvsp[(2) - (3)]));
-																		strcat(aux, (yyvsp[(3) - (3)]));
-																		(yyval) = strdup(aux);
-																	}
-    break;
-
-  case 105:
-
-/* Line 1455 of yacc.c  */
-#line 696 "parser.y"
-    {
-															char aux[100];
-															strcpy(aux, (yyvsp[(1) - (2)]));
-															strcat(aux, (yyvsp[(2) - (2)]));
-															(yyval) = strdup(aux);
-														}
-    break;
-
-  case 106:
 
 /* Line 1455 of yacc.c  */
 #line 703 "parser.y"
@@ -2849,17 +2838,42 @@ yyreduce:
 																	}
     break;
 
-  case 107:
+  case 105:
 
 /* Line 1455 of yacc.c  */
 #line 710 "parser.y"
+    {
+															char aux[100];
+															strcpy(aux, (yyvsp[(1) - (2)]));
+															strcat(aux, (yyvsp[(2) - (2)]));
+															(yyval) = strdup(aux);
+														}
+    break;
+
+  case 106:
+
+/* Line 1455 of yacc.c  */
+#line 717 "parser.y"
+    {
+																		char aux[100];
+																		strcpy(aux, "||");
+																		strcat(aux, (yyvsp[(2) - (3)]));
+																		strcat(aux, (yyvsp[(3) - (3)]));
+																		(yyval) = strdup(aux);
+																	}
+    break;
+
+  case 107:
+
+/* Line 1455 of yacc.c  */
+#line 724 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 108:
 
 /* Line 1455 of yacc.c  */
-#line 712 "parser.y"
+#line 726 "parser.y"
     {
 																		char aux[100];
 																		strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2867,7 +2881,11 @@ yyreduce:
 																		for(i = 0; i<current_tab_tipo ; i++){
 																			if(strstr((yyvsp[(1) - (2)]), tabela[i].nome) != NULL){
 																				if(strstr((yyvsp[(1) - (2)]), "\'") != NULL){
-																					tabela[i].flag_char = 1;
+																					if(strstr((yyvsp[(1) - (2)]), "[") == NULL){
+																						if((strstr((yyvsp[(1) - (2)]), "!=") != NULL) || strstr((yyvsp[(1) - (2)]), "==") != NULL){
+																							tabela[i].flag_char = 1;
+																						}
+																					}
 																				}
 																			}
 																		}
@@ -2879,7 +2897,7 @@ yyreduce:
   case 109:
 
 /* Line 1455 of yacc.c  */
-#line 727 "parser.y"
+#line 745 "parser.y"
     {
 																			char aux[100];
 																			strcpy(aux, "&&");
@@ -2892,18 +2910,36 @@ yyreduce:
   case 110:
 
 /* Line 1455 of yacc.c  */
-#line 734 "parser.y"
+#line 752 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 111:
 
 /* Line 1455 of yacc.c  */
-#line 737 "parser.y"
+#line 755 "parser.y"
     {
 																		char aux[100];
 																		strcpy(aux, (yyvsp[(1) - (2)]));
 																		strcat(aux, (yyvsp[(2) - (2)]));
+																		int i;
+																		for(i = 0; i<current_tab_tipo ; i++){
+																			if(strcmp((yyvsp[(1) - (2)]), tabela[i].nome) == 0){
+																				if(tabela[i].flag_string == 1){
+																					if(strstr((yyvsp[(2) - (2)]), "==") != NULL){
+																						if(strstr((yyvsp[(2) - (2)]), "\'") == NULL){
+																							char *result;
+																							strcpy(aux, "strcmp(");
+																							strcat(aux, (yyvsp[(1) - (2)]));
+																							result = repl_str((yyvsp[(2) - (2)]), "==", "");
+																							strcat(aux, ", ");
+																							strcat(aux, result);
+																							strcat(aux, ") == 0");
+																						}
+																					}
+																				}
+																			}
+																		}
 																		(yyval) = strdup(aux);
 																	}
     break;
@@ -2911,7 +2947,7 @@ yyreduce:
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 743 "parser.y"
+#line 779 "parser.y"
     {
 																			char aux[100];
 																			strcpy(aux, "!");
@@ -2924,28 +2960,28 @@ yyreduce:
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 750 "parser.y"
+#line 786 "parser.y"
     { (yyval) = strdup("true"); }
     break;
 
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 751 "parser.y"
+#line 787 "parser.y"
     { (yyval) = strdup("false"); }
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 753 "parser.y"
+#line 789 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 755 "parser.y"
+#line 791 "parser.y"
     {
 																char aux[100];
 																strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2957,21 +2993,21 @@ yyreduce:
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 761 "parser.y"
+#line 797 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 763 "parser.y"
+#line 799 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 765 "parser.y"
+#line 801 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, (yyvsp[(1) - (3)]));
@@ -2983,7 +3019,7 @@ yyreduce:
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 771 "parser.y"
+#line 807 "parser.y"
     {
 													char aux[100];
 													strcpy(aux, (yyvsp[(1) - (2)]));
@@ -2995,7 +3031,7 @@ yyreduce:
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 778 "parser.y"
+#line 814 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, (yyvsp[(1) - (3)]));
@@ -3008,14 +3044,14 @@ yyreduce:
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 785 "parser.y"
+#line 821 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 787 "parser.y"
+#line 823 "parser.y"
     {
 												char aux[100];
 												strcpy(aux, (yyvsp[(1) - (2)]));
@@ -3027,14 +3063,14 @@ yyreduce:
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 794 "parser.y"
+#line 830 "parser.y"
     { (yyval) = strdup(yytext); }
     break;
 
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 796 "parser.y"
+#line 832 "parser.y"
     {
 														char aux[100];
 														strcpy(aux, (yyvsp[(1) - (3)]));
@@ -3046,14 +3082,14 @@ yyreduce:
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 802 "parser.y"
+#line 838 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 805 "parser.y"
+#line 841 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, "(");
@@ -3066,7 +3102,7 @@ yyreduce:
   case 140:
 
 /* Line 1455 of yacc.c  */
-#line 825 "parser.y"
+#line 861 "parser.y"
     {
 											char aux[30];
 											strcpy(aux, (yyvsp[(1) - (2)]));
@@ -3078,7 +3114,7 @@ yyreduce:
   case 143:
 
 /* Line 1455 of yacc.c  */
-#line 836 "parser.y"
+#line 872 "parser.y"
     {
 																		char aux[150];
 																		strcpy(aux, "sqrt (");
@@ -3091,7 +3127,7 @@ yyreduce:
   case 144:
 
 /* Line 1455 of yacc.c  */
-#line 845 "parser.y"
+#line 881 "parser.y"
     {
 																		char aux[100];
 																		strcpy(aux, "pow (");
@@ -3106,7 +3142,7 @@ yyreduce:
   case 145:
 
 /* Line 1455 of yacc.c  */
-#line 856 "parser.y"
+#line 892 "parser.y"
     {
 																		char aux[100];
 																		strcpy(aux, "strlen (");
@@ -3119,7 +3155,7 @@ yyreduce:
   case 148:
 
 /* Line 1455 of yacc.c  */
-#line 867 "parser.y"
+#line 903 "parser.y"
     {
 																	char aux[100];
 																	strcpy(aux, (yyvsp[(1) - (4)]));
@@ -3141,14 +3177,14 @@ yyreduce:
   case 150:
 
 /* Line 1455 of yacc.c  */
-#line 885 "parser.y"
+#line 921 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
   case 151:
 
 /* Line 1455 of yacc.c  */
-#line 887 "parser.y"
+#line 923 "parser.y"
     {
 													char aux[100];
 													strcpy(aux, (yyvsp[(1) - (2)]));
@@ -3160,7 +3196,7 @@ yyreduce:
   case 152:
 
 /* Line 1455 of yacc.c  */
-#line 894 "parser.y"
+#line 930 "parser.y"
     {
 															char aux [100];
 															strcpy(aux, ", ");
@@ -3173,14 +3209,14 @@ yyreduce:
   case 153:
 
 /* Line 1455 of yacc.c  */
-#line 901 "parser.y"
+#line 937 "parser.y"
     { (yyval) = strdup(""); }
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 3184 "y.tab.c"
+#line 3220 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -3392,7 +3428,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 903 "parser.y"
+#line 939 "parser.y"
 
 void yyerror (char *s) {
 	fprintf(stderr, "%s\n", s);

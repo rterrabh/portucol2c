@@ -16,6 +16,7 @@
 		char vet[100];
 		int flag_param;
 		int flag_char;
+		int flag_string;
 	};
 	
 	struct table tabela[300];
@@ -77,7 +78,7 @@ declaracao_lista 		: declaracao	{
 													strcpy(temp_gets, "gets(");
 													strcat(temp_gets, tabela[i].nome);
 													strcat(temp_gets, ")");
-													strcpy(result_gets, "scanf(\" %c\", ");
+													strcpy(result_gets, "scanf(\" %c\", &");
 													strcat(result_gets, tabela[i].nome);
 													strcat(result_gets, ")");
 													
@@ -133,7 +134,7 @@ declaracao_lista 		: declaracao	{
 																strcpy(temp_gets, "gets(");
 																strcat(temp_gets, tabela[i].nome);
 																strcat(temp_gets, ")");
-																strcpy(result_gets, "scanf(\" %c\", ");
+																strcpy(result_gets, "scanf(\" %c\", &");
 																strcat(result_gets, tabela[i].nome);
 																strcat(result_gets, ")");
 																
@@ -174,6 +175,7 @@ decl_texto				: id decl_texto_vet decl_texto_fat		{
 													if(strstr($2, "[") == NULL){
 														strcat(aux, "[50]");
 														strcpy(tabela[current_tab_nome].vet, "[50]");
+														tabela[current_tab_nome].flag_string = 1;
 													}
 													strcpy(tabela[current_tab_tipo].tipo, "char ");
 													strcpy(tabela[current_tab_nome].vet, $2);
@@ -665,6 +667,18 @@ expressao 			: var ATRIBUICAO expressao		{
 														strcpy(aux, $1);
 														strcat(aux, " = ");
 														strcat(aux, $3);
+														int i;
+														for(i = 0; i<current_tab_tipo ; i++){
+															if(strcmp($1, tabela[i].nome) == 0){
+																if(tabela[i].flag_string == 1){
+																	strcpy(aux, "strcpy(");
+																	strcat(aux, $1);
+																	strcat(aux, ", ");
+																	strcat(aux, $3);
+																	strcat(aux, ")");
+																}
+															}
+														}
 														$$ = strdup(aux);
 													}
 				| expressao_logica
@@ -716,7 +730,11 @@ termo_logico			: expressao_simples termo_logico_fat		{
 																		for(i = 0; i<current_tab_tipo ; i++){
 																			if(strstr($1, tabela[i].nome) != NULL){
 																				if(strstr($1, "\'") != NULL){
-																					tabela[i].flag_char = 1;
+																					if(strstr($1, "[") == NULL){
+																						if((strstr($1, "!=") != NULL) || strstr($1, "==") != NULL){
+																							tabela[i].flag_char = 1;
+																						}
+																					}
 																				}
 																			}
 																		}
@@ -738,6 +756,24 @@ expressao_simples 		: expressao_soma expressao_simples_fat		{
 																		char aux[100];
 																		strcpy(aux, $1);
 																		strcat(aux, $2);
+																		int i;
+																		for(i = 0; i<current_tab_tipo ; i++){
+																			if(strcmp($1, tabela[i].nome) == 0){
+																				if(tabela[i].flag_string == 1){
+																					if(strstr($2, "==") != NULL){
+																						if(strstr($2, "\'") == NULL){
+																							char *result;
+																							strcpy(aux, "strcmp(");
+																							strcat(aux, $1);
+																							result = repl_str($2, "==", "");
+																							strcat(aux, ", ");
+																							strcat(aux, result);
+																							strcat(aux, ") == 0");
+																						}
+																					}
+																				}
+																			}
+																		}
 																		$$ = strdup(aux);
 																	}
 				| EXCLAMACAO expressao_soma expressao_simples_fat		{

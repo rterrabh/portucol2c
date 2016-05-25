@@ -33,13 +33,6 @@ Formatted  resulted_c_files\alg_24.c
 Formatted  resulted_c_files\alg_25.c
 Formatted  resulted_c_files\alg_26.c
 Formatted  resulted_c_files\alg_27.c
-resulted_c_files\alg_27.c: In function 'main':
-resulted_c_files\alg_27.c:12:65: error: subscripted value is neither array nor pointer nor vector
-resulted_c_files\alg_27.c:15:18: error: subscripted value is neither array nor pointer nor vector
-resulted_c_files\alg_27.c:16:67: error: subscripted value is neither array nor pointer nor vector
-resulted_c_files\alg_27.c:19:22: error: subscripted value is neither array nor pointer nor vector
 Formatted  resulted_c_files\alg_28.c
-resulted_c_files\alg_28.c: In function 'main':
-resulted_c_files\alg_28.c:14:12: error: incompatible types when assigning to type 'char[50]' from type 'char *'
 Formatted  resulted_c_files\alg_29.c
 Formatted  resulted_c_files\alg_30.c
