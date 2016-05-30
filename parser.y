@@ -548,6 +548,7 @@ leia_decl				: LEIA ABREPARENTESE string VIRGULA var FECHAPARENTESE PONTOEVIRGUL
 																{
 																	char *result;
 																	char aux[400];
+																	char aux2[400];
 																	if(strstr($3, "%texto") != NULL){
 																		strcpy(aux, "gets(");
 																		strcat(aux, $5);
@@ -561,8 +562,8 @@ leia_decl				: LEIA ABREPARENTESE string VIRGULA var FECHAPARENTESE PONTOEVIRGUL
 																		strcat(aux, $5);
 																		strcat(aux, ");\n");
 																	}
-																	free(result);
 																	$$ = strdup(aux);
+																	free(result);
 																}
 				  ;
 escreva_decl			: ESCREVA ABREPARENTESE string escreva_fator FECHAPARENTESE PONTOEVIRGULA
