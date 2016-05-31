@@ -1,8 +1,4 @@
 Formatted  resulted_c_files\alg_01.c
-resulted_c_files\alg_01.c: In function 'cadastrar':
-resulted_c_files\alg_01.c:15:13: warning: passing argument 1 of 'gets' makes pointer from integer without a cast [enabled by default]
-In file included from resulted_c_files\alg_01.c:1:0:
-e:\codeblocks\mingw\bin\../lib/gcc/mingw32/4.7.1/../../../../include/stdio.h:357:39: note: expected 'char *' but argument is of type 'char'
 Formatted  resulted_c_files\alg_02.c
 Formatted  resulted_c_files\alg_03.c
 Formatted  resulted_c_files\alg_04.c
@@ -18,10 +14,6 @@ Formatted  resulted_c_files\alg_13.c
 Formatted  resulted_c_files\alg_14.c
 Formatted  resulted_c_files\alg_15.c
 Formatted  resulted_c_files\alg_16.c
-resulted_c_files\alg_16.c: In function 'main':
-resulted_c_files\alg_16.c:14:13: warning: passing argument 1 of 'gets' makes pointer from integer without a cast [enabled by default]
-In file included from resulted_c_files\alg_16.c:1:0:
-e:\codeblocks\mingw\bin\../lib/gcc/mingw32/4.7.1/../../../../include/stdio.h:357:39: note: expected 'char *' but argument is of type 'char'
 Formatted  resulted_c_files\alg_17.c
 Formatted  resulted_c_files\alg_18.c
 Formatted  resulted_c_files\alg_19.c

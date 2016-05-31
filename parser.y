@@ -42,27 +42,49 @@ declaracao_lista 		: declaracao	{
 											char *result;
 											for(i = 0; i<current_tab_tipo ; i++){
 												if(tabela[i].flag_param == 1){
-													char temp_par[10];
-													char result_par[15];
-													char temp_vir[10];
+													char temp_par[25];
+													char result_par[50];
+													char temp_vir[25];
 													char result_vir[20];
 													
 													strcpy(temp_par, "(");
 													strcat(temp_par, tabela[i].tipo);
 													strcpy(result_par, temp_par);
-													strcat(result_par, "*");
+													if(strcmp(tabela[i].tipo, "char ") == 0){
+														strcat(result_par, tabela[i].nome);
+														strcat(result_par, tabela[i].vet);
+													} else {
+														strcat(result_par, "*");
+														strcat(result_par, tabela[i].nome);
+													}
 													strcat(temp_par, tabela[i].nome);
-													strcat(result_par, tabela[i].nome);
 													
 													strcpy(temp_vir, ", ");
 													strcat(temp_vir, tabela[i].tipo);
 													strcpy(result_vir, temp_vir);
-													strcat(result_vir, "*");
+													if(strcmp(tabela[i].tipo, "char ") == 0){
+														strcat(result_vir, tabela[i].nome);
+														strcat(result_vir, tabela[i].vet);
+													} else {
+														strcat(result_vir, "*");
+														strcat(result_vir, tabela[i].nome);
+													}
 													strcat(temp_vir, tabela[i].nome);
-													strcat(result_vir, tabela[i].nome);
 													
 													result = repl_str(aux, temp_par, result_par);
 													result = repl_str(result, temp_vir, result_vir);
+													
+													char temp[100];
+													strcpy(temp, result_vir);
+													strcat(temp, tabela[i].vet);
+													result = repl_str(result, temp, result_vir);
+													
+													char temp2[100];
+													strcpy(temp2, result_par);
+													strcat(temp2, tabela[i].vet);
+													result = repl_str(result, temp2, result_par);
+													
+													
 													strcpy(aux, result);
 												}
 												if(tabela[i].flag_char == 1){
@@ -75,20 +97,18 @@ declaracao_lista 		: declaracao	{
 													strcat(temp_decl, "[50]");
 													strcpy(result_decl, tabela[i].nome);
 													
-													strcpy(temp_gets, "gets(");
+													strcpy(temp_gets, "fflush(stdin);\ngets(");
 													strcat(temp_gets, tabela[i].nome);
-													strcat(temp_gets, ")");
 													strcpy(result_gets, "scanf(\" %c\", &");
 													strcat(result_gets, tabela[i].nome);
-													strcat(result_gets, ")");
 													
 													result = repl_str(aux, temp_decl, result_decl);
 													result = repl_str(result, temp_gets, result_gets);
 													strcpy(aux, result);
 												}
 											}
-											free(result);
 											$$ = strdup(aux);
+											free(result);
 										}
 				| declaracao declaracao_lista		{
 														char aux[10000];
@@ -98,27 +118,49 @@ declaracao_lista 		: declaracao	{
 														char *result;
 														for(i = 0; i<current_tab_tipo ; i++){
 															if(tabela[i].flag_param == 1){
-																char temp_par[10];
-																char result_par[15];
-																char temp_vir[10];
-																char result_vir[20];
+																char temp_par[25];
+																char result_par[50];
+																char temp_vir[25];
+																char result_vir[50];
 																
 																strcpy(temp_par, "(");
 																strcat(temp_par, tabela[i].tipo);
 																strcpy(result_par, temp_par);
-																strcat(result_par, "*");
+																if(strcmp(tabela[i].tipo, "char ") == 0){
+																	strcat(result_par, tabela[i].nome);
+																	strcat(result_par, tabela[i].vet);
+																} else {
+																	strcat(result_par, "*");
+																	strcat(result_par, tabela[i].nome);
+																}
 																strcat(temp_par, tabela[i].nome);
-																strcat(result_par, tabela[i].nome);
 																
 																strcpy(temp_vir, ", ");
 																strcat(temp_vir, tabela[i].tipo);
 																strcpy(result_vir, temp_vir);
-																strcat(result_vir, "*");
+																if(strcmp(tabela[i].tipo, "char ") == 0){
+																	strcat(result_vir, tabela[i].nome);
+																	strcat(result_vir, tabela[i].vet);
+																} else {
+																	strcat(result_vir, "*");
+																	strcat(result_vir, tabela[i].nome);
+																}
 																strcat(temp_vir, tabela[i].nome);
-																strcat(result_vir, tabela[i].nome);
 																
 																result = repl_str(aux, temp_par, result_par);
 																result = repl_str(result, temp_vir, result_vir);
+																
+																char temp[100];
+																strcpy(temp, result_vir);
+																strcat(temp, tabela[i].vet);
+																result = repl_str(result, temp, result_vir);
+																
+																char temp2[100];
+																strcpy(temp2, result_par);
+																strcat(temp2, tabela[i].vet);
+																result = repl_str(result, temp2, result_par);
+													
+													
 																strcpy(aux, result);
 															}
 															if(tabela[i].flag_char == 1){
@@ -131,20 +173,18 @@ declaracao_lista 		: declaracao	{
 																strcat(temp_decl, "[50]");
 																strcpy(result_decl, tabela[i].nome);
 																
-																strcpy(temp_gets, "gets(");
+																strcpy(temp_gets, "fflush(stdin);\ngets(");
 																strcat(temp_gets, tabela[i].nome);
-																strcat(temp_gets, ")");
 																strcpy(result_gets, "scanf(\" %c\", &");
 																strcat(result_gets, tabela[i].nome);
-																strcat(result_gets, ")");
 																
 																result = repl_str(aux, temp_decl, result_decl);
 																result = repl_str(result, temp_gets, result_gets);
 																strcpy(aux, result);
 															}
 														}
-														free(result);
 														$$ = strdup(aux);
+														free(result);
 													}
 				  ;
 declaracao 			: var_declaracao
@@ -172,13 +212,11 @@ decl_texto				: id decl_texto_vet decl_texto_fat		{
 													strcpy(aux, $1);
 													strcat(aux, $2);
 													strcpy(tabela[current_tab_nome].nome, $1);
-													if(strstr($2, "[") == NULL){
-														strcat(aux, "[50]");
-														strcpy(tabela[current_tab_nome].vet, "[50]");
-														tabela[current_tab_nome].flag_string = 1;
-													}
+													strcat(aux, "[50]");
 													strcpy(tabela[current_tab_tipo].tipo, "char ");
 													strcpy(tabela[current_tab_nome].vet, $2);
+													strcat(tabela[current_tab_nome].vet, "[50]");
+													tabela[current_tab_nome].flag_string = 1;
 													current_tab_tipo++;
 													current_tab_nome++;
 													strcat(aux, $3);
@@ -190,7 +228,6 @@ decl_texto_vet			: ABRECOLCHETE numint FECHACOLCHETE ATRIBUICAO var_vet_atr		{
 																							strcpy(aux, "[");
 																							strcat(aux, $2);
 																							strcat(aux, "] = ");
-																							tabela[current_tab_nome].flag_char = 1;
 																							strcat(aux, $5);
 																							$$ = strdup(aux);
 																						}
@@ -199,7 +236,6 @@ decl_texto_vet			: ABRECOLCHETE numint FECHACOLCHETE ATRIBUICAO var_vet_atr		{
 																			strcpy(aux, "[");
 																			strcat(aux, $2);
 																			strcat(aux, "]");
-																			tabela[current_tab_nome].flag_char = 1;
 																			strcat(aux, $4);
 																			$$ = strdup(aux);
 																		}
@@ -397,7 +433,7 @@ param 				: tipo_especificador id			{
 													}
 				| TEXTO id		{
 									char aux[100];
-									strcpy(aux, "char *");
+									strcpy(aux, "char ");
 									strcat(aux, $2);
 									$$ = strdup(aux);
 								}
@@ -538,6 +574,7 @@ escolha_decl			: ESCOLHA ABREPARENTESE var FECHAPARENTESE ABRECHAVE escolhas_den
 																		if(strstr($3, tabela[i].nome) != NULL){
 																			if(strcmp(tabela[i].tipo, "char ") == 0){
 																				tabela[i].flag_char = 1;
+																				tabela[i].flag_string = 0;
 																			}
 																		}
 																	}
@@ -550,7 +587,7 @@ leia_decl				: LEIA ABREPARENTESE string VIRGULA var FECHAPARENTESE PONTOEVIRGUL
 																	char aux[400];
 																	char aux2[400];
 																	if(strstr($3, "%texto") != NULL){
-																		strcpy(aux, "gets(");
+																		strcpy(aux, "fflush(stdin);\ngets(");
 																		strcat(aux, $5);
 																		strcat(aux, ");\n");
 																	} else {
@@ -578,8 +615,8 @@ escreva_decl			: ESCREVA ABREPARENTESE string escreva_fator FECHAPARENTESE PONTO
 																	strcat(aux, result);
 																	strcat(aux, $4);
 																	strcat(aux, ");\n");
-																	free(result);
 																	$$ = strdup(aux);
+																	free(result);
 																}
 				  ;
 maiuscula_decl			: MAIUSCULA ABREPARENTESE char_fator FECHAPARENTESE
@@ -671,7 +708,7 @@ expressao 			: var ATRIBUICAO expressao		{
 														int i;
 														for(i = 0; i<current_tab_tipo ; i++){
 															if(strcmp($1, tabela[i].nome) == 0){
-																if(tabela[i].flag_string == 1){
+																if((tabela[i].flag_string == 1) && (tabela[i].flag_char != 1)){
 																	strcpy(aux, "strcpy(");
 																	strcat(aux, $1);
 																	strcat(aux, ", ");
@@ -734,6 +771,7 @@ termo_logico			: expressao_simples termo_logico_fat		{
 																					if(strstr($1, "[") == NULL){
 																						if((strstr($1, "!=") != NULL) || strstr($1, "==") != NULL){
 																							tabela[i].flag_char = 1;
+																							tabela[i].flag_string = 0;
 																						}
 																					}
 																				}
@@ -760,7 +798,7 @@ expressao_simples 		: expressao_soma expressao_simples_fat		{
 																		int i;
 																		for(i = 0; i<current_tab_tipo ; i++){
 																			if(strcmp($1, tabela[i].nome) == 0){
-																				if(tabela[i].flag_string == 1){
+																				if((tabela[i].flag_string == 1) && (tabela[i].flag_char != 1)){
 																					if(strstr($2, "==") != NULL){
 																						if(strstr($2, "\'") == NULL){
 																							char *result;
