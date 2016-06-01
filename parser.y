@@ -701,7 +701,7 @@ padrao_opc				: PADRAO DOISPONTOS comando			{
 				| /*vazio*/		{ $$ = strdup(""); }
 				  ;
 expressao 			: var ATRIBUICAO expressao		{ 
-														char aux[200];
+														char aux[300];
 														strcpy(aux, $1);
 														strcat(aux, " = ");
 														strcat(aux, $3);
@@ -739,21 +739,21 @@ var_fat 			: ABRECOLCHETE expressao FECHACOLCHETE var_fat		{
 				| /*vazio*/		{ $$ = strdup(""); }
 				  ;
 expressao_logica		: OU termo_logico expressao_logica_fat		{
-																		char aux[100];
+																		char aux[200];
 																		strcpy(aux, "||");
 																		strcat(aux, $2);
 																		strcat(aux, $3);
 																		$$ = strdup(aux);
 																	}
 				| termo_logico expressao_logica_fat		{
-															char aux[100];
+															char aux[200];
 															strcpy(aux, $1);
 															strcat(aux, $2);
 															$$ = strdup(aux);
 														}
 				  ;
 expressao_logica_fat	: OU termo_logico expressao_logica_fat		{
-																		char aux[100];
+																		char aux[200];
 																		strcpy(aux, "||");
 																		strcat(aux, $2);
 																		strcat(aux, $3);
@@ -762,7 +762,7 @@ expressao_logica_fat	: OU termo_logico expressao_logica_fat		{
 				| /*vazio*/		{ $$ = strdup(""); }
 				  ;
 termo_logico			: expressao_simples termo_logico_fat		{
-																		char aux[100];
+																		char aux[200];
 																		strcpy(aux, $1);
 																		int i;
 																		for(i = 0; i<current_tab_tipo ; i++){
@@ -782,7 +782,7 @@ termo_logico			: expressao_simples termo_logico_fat		{
 																	}
 				  ;
 termo_logico_fat			: E expressao_simples termo_logico_fat		{
-																			char aux[100];
+																			char aux[200];
 																			strcpy(aux, "&&");
 																			strcat(aux, $2);
 																			strcat(aux, $3);
@@ -792,7 +792,7 @@ termo_logico_fat			: E expressao_simples termo_logico_fat		{
 				  ;
 				  
 expressao_simples 		: expressao_soma expressao_simples_fat		{
-																		char aux[100];
+																		char aux[200];
 																		strcpy(aux, $1);
 																		strcat(aux, $2);
 																		int i;
@@ -816,7 +816,7 @@ expressao_simples 		: expressao_soma expressao_simples_fat		{
 																		$$ = strdup(aux);
 																	}
 				| EXCLAMACAO expressao_soma expressao_simples_fat		{
-																			char aux[100];
+																			char aux[200];
 																			strcpy(aux, "!");
 																			strcat(aux, $2);
 																			strcat(aux, $3);
@@ -828,7 +828,7 @@ expressao_simples 		: expressao_soma expressao_simples_fat		{
 relacional				: RELACIONAL		{ $$ = strdup(yytext); }
 				  ;
 expressao_simples_fat	 	: relacional expressao_soma		{
-																char aux[100];
+																char aux[200];
 																strcpy(aux, $1);
 																strcat(aux, $2);
 																$$ = strdup(aux);
@@ -838,20 +838,21 @@ expressao_simples_fat	 	: relacional expressao_soma		{
 somasub					: SOMASUB	{ $$ = strdup(yytext); }
 				  ;
 expressao_soma			: somasub termo expressao_soma_fat		{
-																	char aux[100];
+																	char aux[200];
 																	strcpy(aux, $1);
 																	strcat(aux, $2);
+																	strcat(aux, $3);
 																	$$ = strdup(aux);
 																}
 				| termo expressao_soma_fat		{
-													char aux[100];
+													char aux[200];
 													strcpy(aux, $1);
 													strcat(aux, $2);
 													$$ = strdup(aux);
 												}
 				  ;
 expressao_soma_fat		: somasub termo expressao_soma_fat		{
-																	char aux[100];
+																	char aux[200];
 																	strcpy(aux, $1);
 																	strcat(aux, $2);
 																	strcat(aux, $3);
@@ -860,7 +861,7 @@ expressao_soma_fat		: somasub termo expressao_soma_fat		{
 				| /*vazio*/		{ $$ = strdup(""); }
 				  ;
 termo 				: fator termo_fat		{
-												char aux[100];
+												char aux[200];
 												strcpy(aux, $1);
 												strcat(aux, $2);
 												$$ = strdup(aux);
@@ -869,7 +870,7 @@ termo 				: fator termo_fat		{
 multdiv				: MULTDIV		{ $$ = strdup(yytext); }
 				  ;
 termo_fat 			: multdiv fator termo_fat		{
-														char aux[100];
+														char aux[200];
 														strcpy(aux, $1);
 														strcat(aux, $2);
 														$$ = strdup(aux);
@@ -878,7 +879,7 @@ termo_fat 			: multdiv fator termo_fat		{
 		  		  ;
 
 fator 			: ABREPARENTESE expressao FECHAPARENTESE		{
-																	char aux[100];
+																	char aux[200];
 																	strcpy(aux, "(");
 																	strcat(aux, $2);
 																	strcat(aux, ")");
